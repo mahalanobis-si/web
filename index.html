@@ -51,11 +51,32 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
 .centre h2{font-size:clamp(36px,5.4vw,84px)}
 .centre,.travel,.top{text-shadow:0 0 18px var(--night),0 0 6px var(--night)}
 .pill{text-shadow:none}
+.centre .pill{border:0}
 .centre p{margin:0;max-width:40em;font-size:clamp(12px,1.05vw,15px);line-height:1.3;text-transform:uppercase;color:var(--ink)}
 #open,#close{transition:opacity .5s ease}
 #close{opacity:0;top:41%}
 .go{display:grid;place-items:center;width:58px;height:58px;border:1.5px solid var(--ink);border-radius:50%;transition:background .3s,color .3s}
 .go:hover{background:var(--ink);color:var(--night)}
+.eyebrow{font-family:var(--data);font-size:clamp(11px,1vw,14px)!important;letter-spacing:.14em;color:var(--ember)!important}
+.skip{pointer-events:auto;min-height:44px;font-family:var(--data);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);border-bottom:1px solid var(--line);margin-top:-14px}
+.skip:hover{border-color:var(--ink)}
+.partners{font-size:11px!important;letter-spacing:.14em;color:var(--mist)!important;margin-top:-10px!important}
+.nav button:not(.pill){min-height:44px;font:inherit;letter-spacing:inherit;text-transform:inherit;transition:opacity .2s}
+.nav button:not(.pill):hover{opacity:.6}
+dialog{width:min(440px,calc(100vw - 32px));padding:22px;border-radius:14px;border:1px solid rgba(238,241,247,.18);background:rgba(10,14,22,.92);color:var(--ink);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+dialog::backdrop{background:rgba(4,6,10,.6)}
+dialog form{display:flex;flex-direction:column;gap:8px}
+dialog .dh{display:flex;justify-content:space-between;align-items:center;gap:12px}
+dialog h2{margin:0;font-family:var(--display);font-weight:500;font-size:28px;letter-spacing:-.03em}
+dialog .x{min-height:44px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mist)}
+dialog .dp{margin:0 0 6px;font-size:13px;line-height:1.4;color:var(--mist)}
+dialog label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mist);margin-top:6px}
+dialog input:not(.sr){min-height:44px;padding:0 12px;border-radius:8px;border:1px solid rgba(238,241,247,.25);background:rgba(4,6,10,.6);color:var(--ink);font:inherit;font-size:14px}
+dialog input:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
+dialog .dmsg{margin:6px 0 0;min-height:1.4em;font-size:13px;line-height:1.4;overflow-wrap:anywhere}
+dialog .dmsg.bad{color:var(--ember)}dialog .dmsg.good{color:#86e0b4}
+dialog .pill{justify-content:center;border:0;cursor:pointer;margin-top:4px}
+dialog .pill[disabled]{opacity:.6}
 .go svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 
 .bottom{display:flex;align-items:flex-end;justify-content:flex-end;gap:24px;flex-wrap:wrap}
@@ -103,7 +124,9 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
   #close{top:36%}
   .say{top:84px;gap:12px}
   .say .in{gap:12px}
-  .say ul{margin-left:0}
+  .say ul{display:none}
+  .say h2{font-size:26px}
+  .nav button:not(.pill){display:none}
   .travel{width:100%;justify-content:center}
 }
 </style>
@@ -119,21 +142,24 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
       Mahalanobis
     </a>
     <nav class="nav" aria-label="Main">
-      <a href="#">Product</a><a href="#">How it works</a><a href="#">Proof</a>
-      <a class="pill" href="#">Book a demo</a>
+      <button type="button" data-go="0.24">Connect</button><button type="button" data-go="0.52">Semantic layer</button><button type="button" data-go="0.9">Root cause</button>
+      <button type="button" class="pill" data-demo>Book a demo</button>
     </nav>
   </header>
 
   <section class="centre" id="open">
+    <p class="eyebrow">Root-cause analyst for every business metric</p>
     <h1>Business runs on data.<br>Data runs on <em>Mahalanobis.</em></h1>
-    <p>It connects your scattered sources, builds the semantic layer from the data itself, and runs the analysis on top.</p>
+    <p>When a metric moves, Mahalanobis tells you why. It connects your sources, builds the semantic layer, and delivers the cause with a next step.</p>
     <button class="go" id="go" aria-label="Travel into the data"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M6 14l6 6 6-6"/></svg></button>
+    <button type="button" class="skip" id="skip">Skip to a finding</button>
+    <p class="partners">Working with five design partners, Series A to D</p>
   </section>
 
   <section class="centre" id="close">
     <h2>See the shape of your own data.</h2>
-    <p>Connect one source. We show you the joins, the layer and the first findings.</p>
-    <a class="pill" href="#" id="demo" tabindex="-1">Book a demo</a>
+    <p>Connect one source. We show you the joins, the layer and the first root cause.</p>
+    <button type="button" class="pill" id="demo" data-demo tabindex="-1">Book a demo</button>
   </section>
 
   <section class="say" id="say" aria-live="polite">
@@ -148,6 +174,20 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
 <svg class="leaders" id="leaders" aria-hidden="true"></svg>
 <div id="notes" aria-hidden="true"></div>
 <div id="fail" hidden></div>
+
+<dialog id="demoDlg" aria-labelledby="demoTitle">
+  <form id="demoForm" novalidate>
+    <div class="dh"><h2 id="demoTitle">Book a demo</h2><button type="button" class="x" id="demoClose" aria-label="Close">Close</button></div>
+    <p class="dp">Tell us where to reach you. We reply within one working day.</p>
+    <label for="dName">Name</label><input id="dName" name="name" autocomplete="name" required>
+    <label for="dEmail">Work email</label><input id="dEmail" name="email" type="email" autocomplete="email" required>
+    <label for="dCompany">Company</label><input id="dCompany" name="company" autocomplete="organization" required>
+    <label for="dMetric">A metric you want explained (optional)</label><input id="dMetric" name="metric">
+    <input id="dHoney" name="_honey" tabindex="-1" autocomplete="off" class="sr" aria-hidden="true">
+    <p class="dmsg" id="demoMsg" role="status"></p>
+    <button type="submit" class="pill" id="demoSend">Send request</button>
+  </form>
+</dialog>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
@@ -216,7 +256,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
       for(var r=0;r<TR;r++){ var y=118+r*(152/(TR-1)); g.beginPath(); g.moveTo(64,y); g.lineTo(320,y); g.stroke(); }
     });
   }
-  var SR=8, SW=34, SH=22.1;
+  var SR=8, SW=40, SH=26;
   function sColX(c){ return (c?236:84)/320*SW-SW/2; }
   function sRowY(r){ return SH/2-(94+r*(98/(SR-1)))/208*SH; }
   function smallTex(name,keyName,other,stray){
@@ -378,11 +418,11 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
   var ents=[], patternAnchor=[];
   var OTHER=['amount','status','ts','region','channel','plan','qty','country','source'];
   for(i=0;i<6;i++){
-    var side=(i%2?1:-1), ex=side*108*W, ez=-600-i*84;
+    var side=(i%2?1:-1), ex=side*108*W, ez=-540-i*78;
     var E=addCard(entityTex(entDef[i][0],entDef[i][1],side>0),50,36,ex,44,ez,0.22,-side*0.5);
     ents.push(E);
     for(var u=0;u<3;u++){
-      var T=addCard(smallTex(entDef[i][1][u][0],entDef[i][1][u][1],OTHER[(i*3+u)%OTHER.length]),SW,SH,ex+(u-1)*42*W,-46,ez+10+(W<0.8?(u-1)*16:0),-0.4,-side*0.35);
+      var T=addCard(smallTex(entDef[i][1][u][0],entDef[i][1][u][1],OTHER[(i*3+u)%OTHER.length]),SW,SH,ex+(u-1)*46*W,-46,ez+10+(W<0.8?(u-1)*16:0),-0.4,-side*0.35);
       var rowY=18-EROW[u]*0.12, portX=side>0?(25-20/8.32):(-25+20/8.32);
       addTube(at(T,sColX(0),SH/2),at(E,portX,rowY),0x8fb0ff,0.32);
       var sf=pick(i===2||i===1||i===3?2:1,SR);
@@ -425,8 +465,8 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
   for(gk=0;gk<4;gk++){ gPrev=null; for(gi=0;gi<lens[gk];gi++){ gP=gp(dvx-20+gi*3,-22-gk*6); dot(gP,0,gk===0,rnd()); if(gPrev) addThread(gPrev,gP,gk===0?0xffb46b:0x8fb0ff,gk===0); gPrev=gP; } }
   addTag(labelTex('driver analysis','#dfe4ee'),72,9,dvx,-84,AZ);
   var analysisAnchor=gp(dvx+22,-30);
-  addTag(wordTex('SEMANTIC LAYER','#8fb0ff'),96,12,0,84,-600).early=true;
-  addTag(wordTex('YOUR SOURCES','#b9c3d3'),96,12,0,-78,-600).early=true;
+  addTag(wordTex('SEMANTIC LAYER','#8fb0ff'),96,12,0,84,-540).early=true;
+  addTag(wordTex('YOUR SOURCES','#b9c3d3'),96,12,0,-78,-540).early=true;
   addTag(wordTex('ANALYSIS','#eef1f7'),96,12,0,84,-1150).early=true;
 
   /* fragments that never find a place: what you are lost among at the start */
@@ -456,6 +496,17 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
     var r1=new THREE.Sprite(new THREE.SpriteMaterial({map:ringTex,transparent:true,depthTest:false,depthWrite:false,opacity:0})); r1.position.copy(P); r1.scale.set(9,9,1); r1.renderOrder=3; scene.add(r1); supp.push(r1);
     if(!small){ var t1=new THREE.Sprite(new THREE.SpriteMaterial({map:labelTex(d[2],'#c3cbd8'),transparent:true,depthTest:false,depthWrite:false,opacity:0})); t1.position.set(P.x,P.y+11,P.z); t1.scale.set(88,11,1); t1.renderOrder=3; scene.add(t1); supp.push(t1); }
   });
+  var emberRing=tex(64,64,function(g){ g.strokeStyle='rgba(255,180,107,1)'; g.lineWidth=5; g.beginPath(); g.arc(32,32,24,0,6.2832); g.stroke(); g.fillStyle='rgba(255,180,107,1)'; g.beginPath(); g.arc(32,32,10,0,6.2832); g.fill(); });
+  function endSprite(map,x,y,w,h){ var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:map,transparent:true,depthTest:false,depthWrite:false,opacity:0})); sp.position.set(x,y,CZ); sp.scale.set(w,h,1); sp.renderOrder=3; scene.add(sp); supp.push(sp); }
+  var causes=[['courier switch: confirmed',true],['price change: ruled out',false],['product mix: ruled out',false],['seasonality: ruled out',false]];
+  var root=new THREE.Vector3(OX,OY,CZ);
+  for(i=0;i<causes.length;i++){
+    var cnx=OX-26*W, cny=OY-18-15*i, ok=causes[i][1];
+    addThread(root,new THREE.Vector3(cnx,cny,CZ),ok?0xffb46b:0x9aa6b8,ok);
+    endSprite(ok?emberRing:ringTex,cnx,cny,ok?8:6,ok?8:6);
+    if(!small) endSprite(labelTex(causes[i][0],ok?'#ffb46b':'#b9c3d3'),cnx-50,cny,92,11.5);
+  }
+  if(!small) endSprite(labelTex('causes tested','#eef1f7'),OX-76*W,OY-4,92,11.5);
   var rings=[];
   for(var rg=1;rg<=3;rg++){
     var pts=[]; for(var k4=0;k4<=128;k4++){ a=k4/128*6.2831853; var uu=Math.cos(a)*SU*rg, vv=Math.sin(a)*SV*rg; pts.push(new THREE.Vector3(uu*ca-vv*sa,uu*sa+vv*ca,CZ)); }
@@ -533,18 +584,47 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
   if(pin){ p=want=Math.min(100,+pin[1])/100; pinned=true; }
   var mouse=new THREE.Vector2(0,0), mouseOn=false;
   function nudge(dv){ want=Math.max(0,Math.min(1,want+dv)); lastInput=performance.now(); }
-  window.addEventListener('wheel',function(e){ nudge(e.deltaY*0.00042); },{passive:true});
+  window.addEventListener('wheel',function(e){ if(dlg.open) return; nudge(e.deltaY*0.0006); },{passive:true});
   window.addEventListener('keydown',function(e){
+    if(dlg.open||/INPUT|TEXTAREA|BUTTON/.test(e.target.tagName)) return;
     if(e.key==='ArrowDown'||e.key==='PageDown'||e.key===' '){ nudge(0.06); }
     else if(e.key==='ArrowUp'||e.key==='PageUp'){ nudge(-0.06); }
   });
   var ty=null;
   window.addEventListener('touchstart',function(e){ ty=e.touches[0].clientY; },{passive:true});
-  window.addEventListener('touchmove',function(e){ var y=e.touches[0].clientY; if(ty!==null) nudge((ty-y)*0.0016); ty=y; },{passive:true});
+  window.addEventListener('touchmove',function(e){ var y=e.touches[0].clientY; if(ty!==null && !dlg.open) nudge((ty-y)*0.0016); ty=y; },{passive:true});
   window.addEventListener('pointermove',function(e){
     mouse.set(e.clientX/window.innerWidth*2-1, -(e.clientY/window.innerHeight*2-1)); mouseOn=true;
   });
   window.addEventListener('pointerleave',function(){ mouseOn=false; });
+  var dlg=document.getElementById('demoDlg');
+  function goTo(v){ pinned=false; want=v; lastInput=performance.now(); }
+  [].forEach.call(document.querySelectorAll('[data-go]'),function(bt){ bt.addEventListener('click',function(){ goTo(+bt.getAttribute('data-go')); }); });
+  document.getElementById('skip').addEventListener('click',function(){ goTo(1); });
+  var DEMO_INBOX='query@mahalanobis.si';
+  var dForm=document.getElementById('demoForm'), dMsg=document.getElementById('demoMsg'), dSend=document.getElementById('demoSend');
+  function dSay(t,cls){ dMsg.textContent=t; dMsg.className='dmsg'+(cls?' '+cls:''); }
+  [].forEach.call(document.querySelectorAll('[data-demo]'),function(bt){ bt.addEventListener('click',function(){
+    dSay('');
+    if(dlg.showModal) dlg.showModal(); else dlg.setAttribute('open','');
+  }); });
+  document.getElementById('demoClose').addEventListener('click',function(){ dlg.close(); });
+  dForm.addEventListener('submit',function(ev){
+    ev.preventDefault();
+    var v={name:dForm.name.value.trim(),email:dForm.email.value.trim(),company:dForm.company.value.trim(),metric:dForm.metric.value.trim()};
+    if(!v.name||!v.company||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v.email)){ dSay('Please fill in your name, a valid work email and your company.','bad'); return; }
+    if(dForm._honey.value){ dSay('Request not sent: the form was filled in by an automated tool.','bad'); return; }
+    dSend.disabled=true; dSay('Sending your request.');
+    fetch('https://formsubmit.co/ajax/'+DEMO_INBOX,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({name:v.name,email:v.email,company:v.company,metric:v.metric||'(not given)',_subject:'Demo request from '+v.company,_template:'table',_captcha:'false'})})
+    .then(function(r){ return r.json().then(function(j){ return {ok:r.ok,j:j}; }); })
+    .then(function(res){
+      dSend.disabled=false;
+      if(res.ok && String(res.j.success)==='true'){ dSay('Request sent. We will reply to '+v.email+'.','good'); dForm.reset(); }
+      else dSay('Your request was not sent ('+(res.j&&res.j.message?res.j.message:'the form service refused it')+'). Please write to '+DEMO_INBOX+' instead.','bad');
+    })
+    .catch(function(err){ dSend.disabled=false; dSay('Your request was not sent ('+(err&&err.message?err.message:'network error')+'). Please write to '+DEMO_INBOX+' instead.','bad'); });
+  });
   var go=document.getElementById('go');
   go.addEventListener('click',function(){ nudge(0.24); });
   go.addEventListener('pointerenter',function(){ scatterWant=1; });
@@ -563,7 +643,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
     ['Lost','Your data is scattered.\nNobody sees the whole.','Thousands of tables, files and fields, spread across every tool your business runs on.',['No shared keys','No documented joins','No single definition']],
     ['Connect','Every join is found.\nEvery join is counted.','Mahalanobis finds what links one source to the next, and tests each link on every row.',['Keys found in the data itself','Each join counted row by row','Weak joins rejected']],
     ['Semantic layer','The semantic layer\nbuilds itself.','Entities and metrics are proposed from the data and the code that writes it. Your team approves them.',['Entities from reconciled keys','Metrics with their formulas','Checked against your own totals','Accepted by a person']],
-    ['Analysis','Analysis runs on its own.\nOnly what matters reaches you.','Data science techniques run on the layer every day. Each finding arrives with its cause and a next step.',['Change point detection','Segmentation','Driver analysis','False alarms suppressed','Every finding has a next step']]
+    ['Root cause','A metric moves.\nYou get the cause.','Change point, segmentation and driver analyses run on the layer every day. Each candidate cause is tested on the rows. False alarms are suppressed.',['What moved, and since when','Every candidate cause tested','Ruled-out causes listed','False alarms suppressed','Same answer on every replay']]
   ];
   var el={open:document.getElementById('open'),close:document.getElementById('close'),say:document.getElementById('say'),
     sayK:document.getElementById('sayK'),sayT:document.getElementById('sayT'),sayD:document.getElementById('sayD'),sayL:document.getElementById('sayL'),
@@ -602,9 +682,10 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
       '<div class="r"><span>Change point detection</span><b class="ok">shift on 3 Nov</b></div><div class="r"><span>Segmentation</span><b class="ok">West region</b></div>'+
       '<div class="r"><span>Driver analysis</span><b class="ok">courier switch</b></div><div class="r"><span>Seasonality test</span><b>no effect</b></div>'},
     {from:0.915,to:1.2,anchor:spr.position,html:
-      '<div class="h warn">Outside the pattern'+SAMPLE+'</div><div class="t">Refund rate up 2.1 pts in the West region since 3 Nov.</div>'+
-      '<div class="r"><span>Confirmed cause</span><b class="ok">courier switch, 78%</b></div>'+
-      '<div class="r"><span>False alarms suppressed</span><b>11 of 12 signals</b></div>'+
+      '<div class="h warn">Root cause found'+SAMPLE+'</div><div class="t">Refund rate up 2.1 pts in the West region since 3 Nov.</div>'+
+      '<div class="r"><span>Root cause</span><b class="ok">courier switch, 78%</b></div>'+
+      '<div class="r"><span>False alarms suppressed</span><b>11 of 12</b></div>'+
+      '<div class="r"><span>Replay</span><b class="ok">identical, 4,812 rows</b></div>'+
       '<div class="act"><span>Next step</span>Move West region orders back to the previous courier.</div>'}
   ];
   var notesHost=document.getElementById('notes'), svgNS='http://www.w3.org/2000/svg', leadersSvg=document.getElementById('leaders');
@@ -641,7 +722,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
         if(x<sb.right+20 && y<sb.bottom+16){ if(sb.right+24+cw<=w-16){ x=sb.right+24; lx=x; ly=Math.max(y+14,Math.min(y+ch-14,ay)); } else { y=Math.min(h-ch-20,sb.bottom+20); ly=y; lx=Math.max(x+14,Math.min(x+cw-14,ax)); } } }
       if(cr && x<cr.r+16 && x+cw>cr.l-16 && y<cr.b+16 && y+ch>cr.t-16){
         var y2=cr.b+14;
-        if(!narrow && y2+ch<=h-12){ y=y2; ly=y; lx=Math.max(x+14,Math.min(x+cw-14,ax)); }
+        if(!narrow && y2+ch<=h-46){ y=y2; ly=y; lx=Math.max(x+14,Math.min(x+cw-14,ax)); }
         else vis*=(1-endV);
       }
       n.el.style.opacity=vis; n.el.style.transform='translate('+Math.round(x)+'px,'+Math.round(y)+'px)';
@@ -656,7 +737,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
   var clock=new THREE.Clock(), v3=new THREE.Vector3(), look=new THREE.Vector3(), mx=0, my=0;
   function frame(){
     var dt=Math.min(clock.getDelta(),0.05), now=performance.now();
-    if(!reduce && !pinned && now-lastInput>2200 && want<1) want=Math.min(1,want+dt*0.011);
+    if(!reduce && !pinned && now-lastInput>2200 && want<1) want=Math.min(1,want+dt*0.02);
     p+=(want-p)*Math.min(1,dt*2.6);
     scatter+=(scatterWant-scatter)*Math.min(1,dt*2.2);
     if(!reduce) uniforms.uTime.value+=dt;
@@ -667,7 +748,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
     look.set(camera.position.x*0.5+mx*34, camera.position.y*0.5+my*20, camZ-220);
     camera.lookAt(look);
 
-    var far=380+560*ss(0.6,0.93,p), tm=uniforms.uTime.value, q, e, dz, fg;
+    var far=470+470*ss(0.6,0.93,p), tm=uniforms.uTime.value, q, e, dz, fg;
     function mOf(z){ return (1-ss(far*0.35,far,camZ-z))*(1-scatter); }
     function fogOf(d){ return (1-ss(380,950,d))*ss(58/W,150/W,d); }
     for(q=0;q<cards.length;q++){
@@ -717,6 +798,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
 
     el.open.style.opacity=1-ss(0.05,0.16,p);
     go.style.pointerEvents=p<0.12?'auto':'none';
+    document.getElementById('skip').style.pointerEvents=p<0.12?'auto':'none';
     var end=ss(0.955,1,p);
     el.close.style.opacity=end;
     el.demo.style.pointerEvents=end>0.5?'auto':'none';
