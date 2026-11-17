@@ -172,7 +172,7 @@ dialog .pill[disabled]{opacity:.6}
       Mahalanobis
     </a>
     <nav class="nav" aria-label="Main">
-      <button type="button" data-go="0.24">Connect</button><button type="button" data-go="0.52">Semantic layer</button><button type="button" data-go="0.9">Root cause</button>
+      <button type="button" data-go="1">Connect</button><button type="button" data-go="2">Semantic layer</button><button type="button" data-go="3">Root cause</button>
       <button type="button" class="pill" data-demo>Book a demo</button>
     </nav>
   </header>
@@ -194,7 +194,7 @@ dialog .pill[disabled]{opacity:.6}
   </section>
 
   <footer class="bottom">
-    <div class="travel"><span id="hint">Scroll to travel</span><span class="rail"><b style="left:17%"></b><b style="left:43%"></b><b style="left:80%"></b><i id="bar"></i></span></div>
+    <div class="travel"><span id="hint">Scroll for next</span><span class="rail"><b style="left:17%"></b><b style="left:43%"></b><b style="left:80%"></b><i id="bar"></i></span></div>
   </footer>
 </div>
 
@@ -323,7 +323,7 @@ dialog .pill[disabled]{opacity:.6}
   function metricTex(name,formula){
     return tex(416,200,function(g,w,h){
       g.textBaseline='middle'; g.textAlign='center'; g.fillStyle='#8fb0ff'; g.font='500 18px '+MONO; g.fillText('METRIC',w/2,34);
-      g.fillStyle='#eef1f7'; g.font='400 60px '+SERIF; g.fillText(name,w/2,90);
+      g.fillStyle='#eef1f7'; var fs=60; g.font='400 '+fs+'px '+SERIF; while(g.measureText(name).width>w-28 && fs>30){ fs-=2; g.font='400 '+fs+'px '+SERIF; } g.fillText(name,w/2,90);
       g.fillStyle='#9aa6b8'; g.font='400 18px '+MONO; g.fillText(formula,w/2,146);
       g.strokeStyle='rgba(238,241,247,.5)'; g.lineWidth=1.5; g.beginPath(); g.moveTo(w/2-80,h-10); g.lineTo(w/2+80,h-10); g.stroke();
       g.beginPath(); g.arc(w/2-80,h-10,6,0,6.2832); g.arc(w/2+80,h-10,6,0,6.2832); g.fillStyle='#eef1f7'; g.fill();
@@ -475,16 +475,13 @@ dialog .pill[disabled]{opacity:.6}
   var metDef=[['Active customers','count(customer_id)',[2,0]],['Net revenue','sum(amount) - refunds',[3,1]],['Refund rate','refunds / payments',[1,5]]];
   var mets=[];
   for(i=0;i<3;i++){
-    var M=addCard(metricTex(metDef[i][0],metDef[i][1]),52,25,(i-1)*100*W,34+(i===1?30:0),-1150,0.12,-(i-1)*0.3);
+    var M=addCard(metricTex(metDef[i][0],metDef[i][1]),52,25,(i-1)*86*W+(W<0.8?0:56),34+(i===1?30:0),-1150,0.12,-(i-1)*0.3);
     mets.push(M);
     for(var k2=0;k2<2;k2++){
       var srcE=ents[metDef[i][2][k2]];
       addTube(at(srcE,0,18),at(M,k2?10:-10,-11.8),0xeef1f7,0.36);
     }
   }
-  addTag(wordTex('SEMANTIC LAYER','#8fb0ff'),96,12,0,84,-540).early=true;
-  addTag(wordTex('YOUR SOURCES','#b9c3d3'),96,12,0,-78,-540).early=true;
-  addTag(wordTex('ANALYSIS','#eef1f7'),96,12,0,84,-1150).early=true;
 
   /* fragments that never find a place: what you are lost among at the start */
   var strays=['tbl_final_v2','users_bak','export(3).csv','stg_orders_old','ledger_2019','tmp_join','sheet1','evt_raw','acct_old','cust_dump','fx_rates','inv_lines_x','q3_fix','legacy_map'];
@@ -604,28 +601,50 @@ dialog .pill[disabled]{opacity:.6}
   scene.add(points);
 
   /* ---------- travel ---------- */
-  var p=0, want=0, lastInput=performance.now()+6000, scatter=0, scatterWant=0;
+  /* the journey stops at each section; one scroll gesture moves one section */
+  var STOPS=[0,0.31,0.57,0.8,1], stopIdx=0, tw=null, arrivedAt=performance.now(), HOLD=[6000,7000,7000,600];
+  var p=0, lastInput=performance.now(), scatter=0, scatterWant=0;
   if('scrollRestoration' in history) history.scrollRestoration='manual';
   var pin=/^#p(\d{1,3})$/.exec(location.hash), pinned=false;
-  if(pin){ p=want=Math.min(100,+pin[1])/100; pinned=true; }
-  window.addEventListener('pageshow',function(ev){ if(ev.persisted && !pinned){ p=want=0; lastInput=performance.now()+6000; } });
+  if(pin){ p=Math.min(100,+pin[1])/100; pinned=true; stopIdx=nearestStop(p); }
+  function nearestStop(v){ var b=0; for(var k=1;k<STOPS.length;k++) if(Math.abs(STOPS[k]-v)<Math.abs(STOPS[b]-v)) b=k; return b; }
+  window.addEventListener('pageshow',function(ev){ if(ev.persisted && !pinned){ tw=null; p=0; stopIdx=0; arrivedAt=lastInput=performance.now(); } });
   var mouse=new THREE.Vector2(0,0), mouseOn=false;
-  function nudge(dv){ want=Math.max(0,Math.min(1,want+dv)); lastInput=performance.now(); }
-  window.addEventListener('wheel',function(e){ if(dlg.open) return; nudge(e.deltaY*0.0006); },{passive:true});
+  function goStop(i){
+    i=Math.max(0,Math.min(STOPS.length-1,i));
+    pinned=false; lastInput=performance.now();
+    if(i===stopIdx && !tw) return;
+    var d=Math.abs(STOPS[i]-p), slow=(p>=0.79 && STOPS[i]===1);
+    stopIdx=i; tw={from:p,to:STOPS[i],t0:performance.now(),dur:reduce?300:(slow?7000:1400+2600*d)};
+  }
+  function busy(){ return tw || performance.now()-arrivedAt<450; }
+  var acc=0, accT=0;
+  window.addEventListener('wheel',function(e){
+    if(dlg.open) return;
+    var now=performance.now(); if(now-accT>220) acc=0; accT=now;
+    if(busy()){ acc=0; return; }
+    acc+=e.deltaY;
+    if(Math.abs(acc)>30){ goStop(stopIdx+(acc>0?1:-1)); acc=0; }
+  },{passive:true});
   window.addEventListener('keydown',function(e){
     if(dlg.open||/INPUT|TEXTAREA|BUTTON/.test(e.target.tagName)) return;
-    if(e.key==='ArrowDown'||e.key==='PageDown'||e.key===' '){ nudge(0.06); }
-    else if(e.key==='ArrowUp'||e.key==='PageUp'){ nudge(-0.06); }
+    if(e.key==='ArrowDown'||e.key==='PageDown'||e.key===' '){ goStop(stopIdx+1); }
+    else if(e.key==='ArrowUp'||e.key==='PageUp'){ goStop(stopIdx-1); }
+    else if(e.key==='Home'){ goStop(0); } else if(e.key==='End'){ goStop(STOPS.length-1); }
   });
   var ty=null;
   window.addEventListener('touchstart',function(e){ ty=e.touches[0].clientY; },{passive:true});
-  window.addEventListener('touchmove',function(e){ var y=e.touches[0].clientY; if(ty!==null && !dlg.open) nudge((ty-y)*0.0016); ty=y; },{passive:true});
+  window.addEventListener('touchend',function(e){
+    if(ty===null||dlg.open) return;
+    var dy=ty-e.changedTouches[0].clientY; ty=null;
+    if(Math.abs(dy)>40 && !busy()) goStop(stopIdx+(dy>0?1:-1));
+  },{passive:true});
   window.addEventListener('pointermove',function(e){
     mouse.set(e.clientX/window.innerWidth*2-1, -(e.clientY/window.innerHeight*2-1)); mouseOn=true;
   });
   window.addEventListener('pointerleave',function(){ mouseOn=false; });
   var dlg=document.getElementById('demoDlg');
-  function goTo(v){ pinned=false; want=v; lastInput=performance.now(); }
+  function goTo(i){ goStop(i); }
   [].forEach.call(document.querySelectorAll('[data-go]'),function(bt){ bt.addEventListener('click',function(){ goTo(+bt.getAttribute('data-go')); }); });
   var DEMO_INBOX='query@mahalanobis.si';
   var dForm=document.getElementById('demoForm'), dMsg=document.getElementById('demoMsg'), dSend=document.getElementById('demoSend');
@@ -634,7 +653,7 @@ dialog .pill[disabled]{opacity:.6}
     dSay('');
     if(dlg.showModal) dlg.showModal(); else dlg.setAttribute('open','');
   }); });
-  document.querySelector('.mark').addEventListener('click',function(ev){ ev.preventDefault(); goTo(0); lastInput=performance.now()+6000; });
+  document.querySelector('.mark').addEventListener('click',function(ev){ ev.preventDefault(); goTo(0); });
   document.getElementById('demoClose').addEventListener('click',function(){ dlg.close(); });
   dForm.addEventListener('submit',function(ev){
     ev.preventDefault();
@@ -653,7 +672,7 @@ dialog .pill[disabled]{opacity:.6}
     .catch(function(err){ dSend.disabled=false; dSay('Your request was not sent ('+(err&&err.message?err.message:'network error')+'). Please write to '+DEMO_INBOX+' instead.','bad'); });
   });
   var go=document.getElementById('go');
-  go.addEventListener('click',function(){ nudge(0.24); });
+  go.addEventListener('click',function(){ goStop(stopIdx+1); });
   go.addEventListener('pointerenter',function(){ scatterWant=1; });
   go.addEventListener('pointerleave',function(){ scatterWant=0; });
 
@@ -696,13 +715,10 @@ dialog .pill[disabled]{opacity:.6}
   /* ---------- glass notes: what the engine is doing, pinned to the thing it is doing it to ---------- */
   var SAMPLE='';
   var notesDef=[
-    {from:0.275,to:0.335,anchor:joinTags[1].s.position,place:'below',html:
+    {from:0.275,to:0.345,anchor:joinTags[1].s.position,place:'below',html:
       '<div class="h">Join found'+SAMPLE+'</div><div class="k">orders_db.cust_ref &rarr; crm.customer_id</div>'+
-      '<div class="r"><span>Rows matched</span><b class="ok">1,204,388 / 1,204,388</b></div><div class="r"><span>Orphans</span><b>0</b></div><div class="r"><span>Shape</span><b>many to one</b></div>'},
-    {from:0.335,to:0.405,anchor:rejA,dir:'in',html:
-      '<div class="h warn">Join rejected'+SAMPLE+'</div><div class="k">product_events.event &rarr; payments_api.status</div>'+
-      '<div class="r"><span>Rows matched</span><b class="no">0.4%</b></div><div class="r"><span>Decision</span><b>not a key, dropped</b></div>'},
-    {from:0.52,to:0.64,anchor:null,ent:2,dir:'in',html:
+      '<div class="r"><span>Rows matched</span><b class="ok">1,204,388 / 1,204,388</b></div><div class="r"><span>Orphans</span><b>0</b></div><div class="r"><span>Shape</span><b>many to one</b></div><div class="r"><span>Candidates rejected</span><b>4</b></div>'},
+    {from:0.53,to:0.64,anchor:null,ent:2,dir:'in',html:
       '<div class="h">Entity'+SAMPLE+'</div><div class="t">Customer</div><div class="k">crm.customer_id = events.user_id = orders.cust_ref</div>'+
       '<div class="r"><span>Keys reconciled</span><b>3 of 3</b></div><div class="r"><span>Status</span><b class="st" data-acc="0.565">Proposed</b></div>'},
     {from:0.94,to:1.2,anchor:spr.position,cls:'fin',html:
@@ -774,8 +790,12 @@ dialog .pill[disabled]{opacity:.6}
   var clock=new THREE.Clock(), v3=new THREE.Vector3(), look=new THREE.Vector3(), mx=0, my=0;
   function frame(){
     var dt=Math.min(clock.getDelta(),0.05), now=performance.now();
-    if(!reduce && !pinned && now-lastInput>2200 && want<1) want=Math.min(1,want+dt*0.02);
-    p+=(want-p)*Math.min(1,dt*2.6);
+    if(tw){
+      var tk=Math.min(1,(now-tw.t0)/tw.dur), te=tk<0.5?4*tk*tk*tk:1-Math.pow(-2*tk+2,3)/2;
+      if(tw.to===1 && tw.from>=0.79) te=tk<0.15?ss(0,0.15,tk)*0.15:tk;
+      p=tw.from+(tw.to-tw.from)*te;
+      if(tk>=1){ p=tw.to; tw=null; arrivedAt=now; }
+    } else if(!reduce && !pinned && stopIdx<STOPS.length-1 && now-Math.max(arrivedAt,lastInput)>HOLD[stopIdx]) goStop(stopIdx+1);
     scatter+=(scatterWant-scatter)*Math.min(1,dt*2.2);
     if(!reduce) uniforms.uTime.value+=dt;
 
@@ -845,7 +865,7 @@ dialog .pill[disabled]{opacity:.6}
     el.demo.style.pointerEvents=end>0.5?'auto':'none';
     el.demo.tabIndex=end>0.5?0:-1;
     el.bar.style.width=Math.round(p*100)+'%';
-    el.hint.textContent=p>0.97?'You have arrived':'Scroll to travel';
+    el.hint.textContent=p>0.97?'You have arrived':'Scroll for next';
     setBeat(p<STEP[1]?0:p<STEP[2]?1:p<STEP[3]?2:3);
     el.say.style.opacity=ss(0.07,0.15,p)*(1-end);
     scrim2.style.opacity=el.say.style.opacity;
