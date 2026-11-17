@@ -1,6 +1,6 @@
 <title>Mahalanobis Hero</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@400;500&family=Space+Mono:wght@400;700&display=swap">
 <style>
 /* Layout: one full-screen 3D field of data points behind a single centred statement. Travel is the only navigation. */
 :root{
@@ -11,9 +11,9 @@
   --line:rgba(238,241,247,.28);
   --signal:#8fb0ff;
   --ember:#ffb46b;
-  --display:"Instrument Serif","Iowan Old Style",Georgia,serif;
-  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --data:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --display:"Funnel Display","Helvetica Neue",Arial,sans-serif;
+  --body:"Space Mono",ui-monospace,Menlo,monospace;
+  --data:"Space Mono",ui-monospace,Menlo,monospace;
 }
 *{box-sizing:border-box}
 html,body{height:100%}
@@ -45,24 +45,32 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
 
 .centre{position:absolute;left:0;right:0;top:50%;transform:translateY(-52%);display:flex;flex-direction:column;align-items:center;text-align:center;gap:26px;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.centre h1,.centre h2{margin:0;font-family:var(--display);font-weight:400;line-height:1;letter-spacing:-.015em;text-wrap:balance}
-.centre h1{font-size:clamp(44px,8.2vw,132px)}
+.centre h1,.centre h2{margin:0;font-family:var(--display);font-weight:500;line-height:.96;letter-spacing:-.04em;text-wrap:balance}
+.centre h1{font-size:clamp(40px,7.2vw,116px)}
 .centre h1 em{font-style:normal;color:var(--signal)}
 .centre h2{font-size:clamp(36px,5.4vw,84px)}
-.centre,.beat,.travel,.top{text-shadow:0 0 18px var(--night),0 0 6px var(--night)}
+.centre,.travel,.top{text-shadow:0 0 18px var(--night),0 0 6px var(--night)}
 .pill{text-shadow:none}
-.centre p{margin:0;max-width:34em;font-size:clamp(15px,1.25vw,19px);line-height:1.5;color:var(--mist)}
+.centre p{margin:0;max-width:40em;font-size:clamp(12px,1.05vw,15px);line-height:1.3;text-transform:uppercase;color:var(--ink)}
 #open,#close{transition:opacity .5s ease}
-#close{opacity:0}
+#close{opacity:0;top:41%}
 .go{display:grid;place-items:center;width:58px;height:58px;border:1.5px solid var(--ink);border-radius:50%;transition:background .3s,color .3s}
 .go:hover{background:var(--ink);color:var(--night)}
 .go svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 
-.bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
-.beat{max-width:27em;min-width:0;display:flex;flex-direction:column;gap:6px;transition:opacity .45s ease}
-.beat .n{font-family:var(--data);font-size:12px;letter-spacing:.14em;color:var(--signal)}
-.beat .t{font-family:var(--display);font-size:clamp(26px,2.6vw,38px);line-height:1.1}
-.beat .d{font-size:15px;line-height:1.5;color:var(--mist)}
+.bottom{display:flex;align-items:flex-end;justify-content:flex-end;gap:24px;flex-wrap:wrap}
+.scrim2{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0;background:radial-gradient(ellipse 50% 58% at 8% 26%,rgba(4,6,10,.95) 0%,rgba(4,6,10,.86) 48%,rgba(4,6,10,0) 100%)}
+.say{position:absolute;left:max(16px,calc(env(safe-area-inset-left,0px) + 3vw));top:clamp(100px,16vh,148px);width:min(600px,calc(100vw - 32px));display:flex;flex-direction:column;gap:20px;opacity:0;text-shadow:0 0 18px var(--night),0 0 6px var(--night)}
+.say .in{display:flex;flex-direction:column;gap:20px;transition:opacity .35s ease,transform .35s ease}
+.say.swap .in{opacity:0;transform:translateY(10px)}
+.say .k{font-family:var(--data);font-size:12px;letter-spacing:.02em;text-transform:uppercase;color:var(--mist)}
+.say .k b{font-weight:400;color:var(--ink)}
+.say h2{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(30px,3.4vw,48px);line-height:1;letter-spacing:-.03em;white-space:pre-line}
+.say p{margin:0;max-width:46em;font-family:var(--data);font-size:12px;line-height:1.25;text-transform:uppercase}
+.say ul{position:relative;list-style:none;margin:10px 0 0 80px;padding:0 0 0 26px;display:flex;flex-direction:column;gap:2px;font-family:var(--data);font-size:12px;line-height:1.25;text-transform:uppercase}
+.say ul::before{content:"";position:absolute;left:0;top:-2px;bottom:-2px;width:5px;border:1px solid var(--ember);border-right:0}
+.say li::before{content:"";display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--ink);margin-right:12px;vertical-align:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .travel{display:flex;align-items:center;gap:16px;font-family:var(--data);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
 .rail{position:relative;width:120px;height:1px;background:var(--line)}
 .rail i{position:absolute;left:0;top:-1px;height:3px;width:0;background:var(--ink)}
@@ -82,6 +90,8 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
 .note .r{display:flex;justify-content:space-between;gap:12px;font-family:var(--data);font-size:12px;color:#c3cbd8;border-top:1px solid rgba(238,241,247,.1);padding-top:6px;margin-top:7px;font-variant-numeric:tabular-nums}
 .note .r b{font-weight:500;color:var(--ink);white-space:nowrap;text-align:right}
 .note .r span{min-width:0}
+.note .act{margin-top:9px;padding:8px 10px;border-radius:8px;background:rgba(255,180,107,.16);font-size:13px;line-height:1.4}
+.note .act span{display:block;font-family:var(--data);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ember);margin-bottom:2px}
 .note .ok{color:#86e0b4}.note .no{color:var(--ember)}
 .note .st{display:inline-block;transition:color .4s}
 @media (max-width:760px){.note{width:min(300px,calc(100vw - 32px))}}
@@ -90,13 +100,17 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
 @media (max-width:760px){
   .nav a:not(.pill){display:none}
   .bottom{justify-content:center;text-align:center}
-  .beat{align-items:center}
+  #close{top:36%}
+  .say{top:84px;gap:12px}
+  .say .in{gap:12px}
+  .say ul{margin-left:0}
   .travel{width:100%;justify-content:center}
 }
 </style>
 
 <div id="field" aria-hidden="true"></div>
 <div class="scrim" aria-hidden="true"></div>
+<div class="scrim2" id="scrim2" aria-hidden="true"></div>
 
 <div class="ui">
   <header class="top">
@@ -122,12 +136,11 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
     <a class="pill" href="#" id="demo" tabindex="-1">Book a demo</a>
   </section>
 
+  <section class="say" id="say" aria-live="polite">
+    <div class="in"><div class="k" id="sayK"></div><h2 id="sayT"></h2><p id="sayD"></p><ul id="sayL"></ul></div>
+  </section>
+
   <footer class="bottom">
-    <div class="beat" id="beat" aria-live="polite">
-      <span class="n" id="beatN">1 of 4</span>
-      <span class="t" id="beatT">Lost in it.</span>
-      <span class="d" id="beatD">Thousands of tables, files and fields. Nobody can see the whole of it.</span>
-    </div>
     <div class="travel"><span id="hint">Scroll to travel</span><span class="rail"><b style="left:17%"></b><b style="left:43%"></b><b style="left:80%"></b><i id="bar"></i></span></div>
   </footer>
 </div>
@@ -180,7 +193,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
   function pick(n,of){ var out=[]; while(out.length<n){ var r=Math.floor(rnd()*of); if(out.indexOf(r)<0) out.push(r); } return out; }
 
   /* ---------- data elements: tables, entities, metrics, and the connections between them ---------- */
-  var MONO='"IBM Plex Mono", ui-monospace, Menlo, monospace', SERIF='"Instrument Serif", Georgia, serif';
+  var MONO='"Space Mono", ui-monospace, Menlo, monospace', SERIF='"Funnel Display", "Helvetica Neue", Arial, sans-serif';
   function tex(w,h,draw){
     var c=document.createElement('canvas'); c.width=w; c.height=h; draw(c.getContext('2d'),w,h);
     var tx=new THREE.CanvasTexture(c); tx.minFilter=THREE.LinearFilter; tx.generateMipmaps=false; return tx;
@@ -255,6 +268,9 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
       rr(g,70,10,w-140,h-20,14); g.fillStyle='rgba(4,6,10,.72)'; g.fill();
       g.textBaseline='middle'; g.textAlign='center'; g.fillStyle='#eef1f7'; g.font='500 26px '+MONO; g.fillText(text,w/2,h/2+1);
     });
+  }
+  function labelTex(text,color){
+    return tex(512,64,function(g,w,h){ g.textBaseline='middle'; g.textAlign='center'; g.fillStyle=color; g.font='500 30px '+MONO; g.fillText(text,w/2,h/2); });
   }
   function wordTex(text,color){
     return tex(768,96,function(g,w,h){
@@ -393,6 +409,22 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
       addTube(at(srcE,0,18),at(M,k2?10:-10,-11.8),0xeef1f7,0.36);
     }
   }
+  /* analyses: the techniques that run on the layer, drawn from the same dots */
+  var AZ=-1300, gPrev, gP, gi, gk;
+  function gp(x,y){ return new THREE.Vector3(gcx+(x-gcx)*1.5,-34+(y+34)*1.5-14,AZ); }
+  var gcx=0;
+  var cpx=-118*W; gPrev=null; gcx=cpx;
+  for(gi=0;gi<22;gi++){ gP=gp(cpx-26+gi*2.5,-34+(gi<13?0:11)+gauss()*1.3); dot(gP,0,gi>=13,rnd()); if(gPrev) addThread(gPrev,gP,gi>=13?0xffb46b:0x8fb0ff,gi>=13); gPrev=gP; }
+  addThread(gp(cpx-26+12.5*2.5,-46),gp(cpx-26+12.5*2.5,-14),0xeef1f7,false);
+  addTag(labelTex('change point detection','#dfe4ee'),72,9,cpx,-84,AZ);
+  gcx=0;
+  var cents=[[-14,-36],[2,-22],[15,-40]];
+  for(gk=0;gk<3;gk++){ var gC=gp(cents[gk][0],cents[gk][1]); for(gi=0;gi<12;gi++){ gP=gp(cents[gk][0]+gauss()*3.6,cents[gk][1]+gauss()*3.2); dot(gP,gk===2?1:0,gk===2,rnd()); if(gi<5) addThread(gC,gP,gk===2?0xffb46b:0x8fb0ff,gk===2); } }
+  addTag(labelTex('segmentation','#dfe4ee'),72,9,0,-84,AZ);
+  var dvx=118*W, lens=[14,8,5,3]; gcx=dvx;
+  for(gk=0;gk<4;gk++){ gPrev=null; for(gi=0;gi<lens[gk];gi++){ gP=gp(dvx-20+gi*3,-22-gk*6); dot(gP,0,gk===0,rnd()); if(gPrev) addThread(gPrev,gP,gk===0?0xffb46b:0x8fb0ff,gk===0); gPrev=gP; } }
+  addTag(labelTex('driver analysis','#dfe4ee'),72,9,dvx,-84,AZ);
+  var analysisAnchor=gp(dvx+22,-30);
   addTag(wordTex('SEMANTIC LAYER','#8fb0ff'),96,12,0,84,-600).early=true;
   addTag(wordTex('YOUR SOURCES','#b9c3d3'),96,12,0,-78,-600).early=true;
   addTag(wordTex('ANALYSIS','#eef1f7'),96,12,0,84,-1150).early=true;
@@ -416,6 +448,14 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
   var fig=[[-13,3],[-6,-5],[1,4],[7,-3],[14,5],[9,10],[1,4]];
   for(i=1;i<fig.length;i++) addThread(new THREE.Vector3(OX+fig[i-1][0]*W,OY+fig[i-1][1],CZ),new THREE.Vector3(OX+fig[i][0]*W,OY+fig[i][1],CZ),0xffb46b,true);
   for(i=0;i<fig.length-1;i++) dot(new THREE.Vector3(OX+fig[i][0]*W,OY+fig[i][1],CZ),3,true,1,rowLost());
+  var supp=[];
+  var ringTex=tex(64,64,function(g){ g.strokeStyle='rgba(185,195,211,.9)'; g.lineWidth=4; g.beginPath(); g.arc(32,32,24,0,6.2832); g.stroke(); });
+  [[-2.4,1.6,'seasonal, suppressed'],[1.2,2.6,'one-off, suppressed'],[0.3,-2.8,'within noise, suppressed']].forEach(function(d){
+    var u=d[0]*SU, v=d[1]*SV, P=new THREE.Vector3(u*ca-v*sa,u*sa+v*ca,CZ);
+    dot(P,3,false,1,rowLost());
+    var r1=new THREE.Sprite(new THREE.SpriteMaterial({map:ringTex,transparent:true,depthTest:false,depthWrite:false,opacity:0})); r1.position.copy(P); r1.scale.set(9,9,1); r1.renderOrder=3; scene.add(r1); supp.push(r1);
+    if(!small){ var t1=new THREE.Sprite(new THREE.SpriteMaterial({map:labelTex(d[2],'#c3cbd8'),transparent:true,depthTest:false,depthWrite:false,opacity:0})); t1.position.set(P.x,P.y+11,P.z); t1.scale.set(88,11,1); t1.renderOrder=3; scene.add(t1); supp.push(t1); }
+  });
   var rings=[];
   for(var rg=1;rg<=3;rg++){
     var pts=[]; for(var k4=0;k4<=128;k4++){ a=k4/128*6.2831853; var uu=Math.cos(a)*SU*rg, vv=Math.sin(a)*SV*rg; pts.push(new THREE.Vector3(uu*ca-vv*sa,uu*sa+vv*ca,CZ)); }
@@ -518,23 +558,29 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
   }
   window.addEventListener('resize',size); size();
 
-  var beats=[
-    ['Lost in it.','Thousands of tables, files and fields. Nobody can see the whole of it.'],
-    ['A thread.','Mahalanobis finds what links one source to the next and counts each link on every row.'],
-    ['Order.','Your sources settle below. The semantic layer forms above them, built from the data and approved by your team.'],
-    ['Clarity.','On top of the layer the analysis runs on its own. It knows the shape of your data, so it sees what sits outside it.']
+  var STEP=[0,0.17,0.43,0.8,1.0001];
+  var SAY=[
+    ['Lost','Your data is scattered.\nNobody sees the whole.','Thousands of tables, files and fields, spread across every tool your business runs on.',['No shared keys','No documented joins','No single definition']],
+    ['Connect','Every join is found.\nEvery join is counted.','Mahalanobis finds what links one source to the next, and tests each link on every row.',['Keys found in the data itself','Each join counted row by row','Weak joins rejected']],
+    ['Semantic layer','The semantic layer\nbuilds itself.','Entities and metrics are proposed from the data and the code that writes it. Your team approves them.',['Entities from reconciled keys','Metrics with their formulas','Checked against your own totals','Accepted by a person']],
+    ['Analysis','Analysis runs on its own.\nOnly what matters reaches you.','Data science techniques run on the layer every day. Each finding arrives with its cause and a next step.',['Change point detection','Segmentation','Driver analysis','False alarms suppressed','Every finding has a next step']]
   ];
-  var el={open:document.getElementById('open'),close:document.getElementById('close'),beat:document.getElementById('beat'),
-    n:document.getElementById('beatN'),t:document.getElementById('beatT'),d:document.getElementById('beatD'),
+  var el={open:document.getElementById('open'),close:document.getElementById('close'),say:document.getElementById('say'),
+    sayK:document.getElementById('sayK'),sayT:document.getElementById('sayT'),sayD:document.getElementById('sayD'),sayL:document.getElementById('sayL'),
     bar:document.getElementById('bar'),hint:document.getElementById('hint'),demo:document.getElementById('demo')};
-  var beatNow=0, swapping=false;
+  var beatNow=-1, beatWant=-1, swapping=false, scrim2=document.getElementById('scrim2');
+  function fillSay(b){
+    var d=SAY[b]; beatNow=b;
+    el.sayK.innerHTML='<b>0'+(b+1)+'</b> / 04 &nbsp; '+d[0];
+    el.sayT.textContent=d[1]; el.sayD.textContent=d[2];
+    el.sayL.innerHTML=d[3].map(function(x){ return '<li>'+x+'</li>'; }).join('');
+  }
   function setBeat(b){
+    beatWant=b;
     if(b===beatNow||swapping) return;
-    swapping=true; el.beat.style.opacity=0;
-    setTimeout(function(){
-      beatNow=b; el.n.textContent=(b+1)+' of 4'; el.t.textContent=beats[b][0]; el.d.textContent=beats[b][1];
-      el.beat.style.opacity=1; swapping=false;
-    },450);
+    if(beatNow<0){ fillSay(b); return; }
+    swapping=true; el.say.classList.add('swap');
+    setTimeout(function(){ fillSay(beatWant); el.say.classList.remove('swap'); swapping=false; },360);
   }
   function ss(a,b,x){ var k=Math.max(0,Math.min(1,(x-a)/(b-a))); return k*k*(3-2*k); }
 
@@ -551,9 +597,15 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
     {from:0.52,to:0.64,anchor:null,ent:2,dir:'in',html:
       '<div class="h">Entity'+SAMPLE+'</div><div class="t">Customer</div><div class="k">crm.customer_id = events.user_id = orders.cust_ref</div>'+
       '<div class="r"><span>Keys reconciled</span><b>3 of 3</b></div><div class="r"><span>Status</span><b class="st" data-acc="0.565">Proposed</b></div>'},
-    {from:0.935,to:1.2,anchor:spr.position,html:
+    {from:0.83,to:0.905,anchor:analysisAnchor,place:'above',html:
+      '<div class="h">Analyses run'+SAMPLE+'</div>'+
+      '<div class="r"><span>Change point detection</span><b class="ok">shift on 3 Nov</b></div><div class="r"><span>Segmentation</span><b class="ok">West region</b></div>'+
+      '<div class="r"><span>Driver analysis</span><b class="ok">courier switch</b></div><div class="r"><span>Seasonality test</span><b>no effect</b></div>'},
+    {from:0.915,to:1.2,anchor:spr.position,html:
       '<div class="h warn">Outside the pattern'+SAMPLE+'</div><div class="t">Refund rate up 2.1 pts in the West region since 3 Nov.</div>'+
-      '<div class="r"><span>Confirmed</span><b class="ok">courier switch, 78%</b></div><div class="r"><span>Ruled out</span><b>price, product mix</b></div><div class="r"><span>Next step</span><b>review courier SLA</b></div>'}
+      '<div class="r"><span>Confirmed cause</span><b class="ok">courier switch, 78%</b></div>'+
+      '<div class="r"><span>False alarms suppressed</span><b>11 of 12 signals</b></div>'+
+      '<div class="act"><span>Next step</span>Move West region orders back to the previous courier.</div>'}
   ];
   var notesHost=document.getElementById('notes'), svgNS='http://www.w3.org/2000/svg', leadersSvg=document.getElementById('leaders');
   notesDef.forEach(function(n){
@@ -566,14 +618,15 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
     leadersSvg.appendChild(n.line); leadersSvg.appendChild(n.dot);
   });
   function updateNotes(camZ,now){
-    var w=window.innerWidth, h=window.innerHeight, narrow=w<760;
+    var w=window.innerWidth, h=window.innerHeight, narrow=w<760, endV=ss(0.955,1,p), cr=null;
+    if(endV>0.02){ cr={l:1e9,t:1e9,r:-1e9,b:-1e9}; [].forEach.call(el.close.children,function(ch0){ var b0=ch0.getBoundingClientRect(); cr.l=Math.min(cr.l,b0.left); cr.t=Math.min(cr.t,b0.top); cr.r=Math.max(cr.r,b0.right); cr.b=Math.max(cr.b,b0.bottom); }); }
     for(var j=0;j<notesDef.length;j++){
       var n=notesDef[j], vis=ss(n.from,n.from+0.02,p)*(1-ss(n.to-0.02,n.to,p))*(1-scatter);
       if(n.card) n.anchor.copy(n.local).applyQuaternion(n.card.mesh.quaternion).add(n.card.mesh.position);
       v3.copy(n.anchor).project(camera);
       if(v3.z>1||vis<0.01){ n.el.style.opacity=0; n.line.style.opacity=0; n.dot.style.opacity=0; continue; }
       var ax=(v3.x+1)/2*w, ay=(1-v3.y)/2*h, cw=n.el.offsetWidth, ch=n.el.offsetHeight, x, y, lx, ly;
-      if(narrow){ x=(w-cw)/2; y=84; lx=w/2; ly=y+ch; }
+      if(narrow){ x=(w-cw)/2; y=h-ch-74; lx=w/2; ly=y; }
       else if(n.place==='below'){ x=Math.max(16,Math.min(w-16-cw,ax-cw*0.35)); y=Math.min(h-ch-150,ay+34); lx=Math.max(x+14,Math.min(x+cw-14,ax)); ly=y; }
       else if(n.place==='above'){ x=Math.max(16,Math.min(w-16-cw,ax+24)); y=Math.max(84,ay-ch-24); lx=x; ly=y+ch-14; }
       else{
@@ -581,8 +634,15 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
         x=out?ax-48-cw:ax+48;
         if(x<16) x=ax+48; else if(x+cw>w-16) x=ax-48-cw;
         x=Math.max(16,Math.min(w-16-cw,x));
-        y=Math.max(84,Math.min(h-ch-150,ay-ch/2));
+        y=Math.max(84,Math.min(h-ch-70,ay-ch/2));
         lx=x>ax?x:x+cw; ly=Math.max(y+14,Math.min(y+ch-14,ay));
+      }
+      if(!narrow){ var sb=el.say.getBoundingClientRect();
+        if(x<sb.right+20 && y<sb.bottom+16){ if(sb.right+24+cw<=w-16){ x=sb.right+24; lx=x; ly=Math.max(y+14,Math.min(y+ch-14,ay)); } else { y=Math.min(h-ch-20,sb.bottom+20); ly=y; lx=Math.max(x+14,Math.min(x+cw-14,ax)); } } }
+      if(cr && x<cr.r+16 && x+cw>cr.l-16 && y<cr.b+16 && y+ch>cr.t-16){
+        var y2=cr.b+14;
+        if(!narrow && y2+ch<=h-12){ y=y2; ly=y; lx=Math.max(x+14,Math.min(x+cw-14,ax)); }
+        else vis*=(1-endV);
       }
       n.el.style.opacity=vis; n.el.style.transform='translate('+Math.round(x)+'px,'+Math.round(y)+'px)';
       n.line.setAttribute('x1',ax.toFixed(1)); n.line.setAttribute('y1',ay.toFixed(1)); n.line.setAttribute('x2',lx.toFixed(1)); n.line.setAttribute('y2',ly.toFixed(1));
@@ -645,6 +705,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
     }
     var ringO=ss(0.9,0.985,p)*(1-scatter);
     for(q=0;q<rings.length;q++) rings[q].material.opacity=ringO*(0.5-q*0.12);
+    for(q=0;q<supp.length;q++) supp[q].material.opacity=ringO*0.9;
     uniforms.uScatter.value=scatter;
     uniforms.uMouse.value.set(mouseOn?mouse.x:9, mouseOn?mouse.y:9);
 
@@ -662,7 +723,9 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
     el.demo.tabIndex=end>0.5?0:-1;
     el.bar.style.width=Math.round(p*100)+'%';
     el.hint.textContent=p>0.97?'You have arrived':'Scroll to travel';
-    setBeat(p<0.17?0:p<0.43?1:p<0.8?2:3);
+    setBeat(p<STEP[1]?0:p<STEP[2]?1:p<STEP[3]?2:3);
+    el.say.style.opacity=ss(0.07,0.15,p)*(1-end);
+    scrim2.style.opacity=el.say.style.opacity;
 
     renderer.render(scene,camera);
     requestAnimationFrame(frame);
