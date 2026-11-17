@@ -88,7 +88,7 @@ dialog .pill[disabled]{opacity:.6}
 .say .k b{font-weight:400;color:var(--ink)}
 .say h2{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(30px,3.4vw,48px);line-height:1;letter-spacing:-.03em;white-space:pre-line}
 .say p{margin:0;max-width:46em;font-family:var(--data);font-size:12px;line-height:1.25;text-transform:uppercase}
-.say ul{position:relative;list-style:none;margin:10px 0 0 80px;padding:0 0 0 26px;display:flex;flex-direction:column;gap:2px;font-family:var(--data);font-size:12px;line-height:1.25;text-transform:uppercase}
+.say ul{position:relative;list-style:none;margin:4px 0 0 0;padding:0 0 0 26px;display:flex;flex-direction:column;gap:2px;font-family:var(--data);font-size:12px;line-height:1.25;text-transform:uppercase}
 .say ul::before{content:"";position:absolute;left:0;top:-2px;bottom:-2px;width:5px;border:1px solid var(--ember);border-right:0}
 .say li::before{content:"";display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--ink);margin-right:12px;vertical-align:2px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
@@ -124,7 +124,6 @@ dialog .pill[disabled]{opacity:.6}
   #close{top:36%}
   .say{top:84px;gap:12px}
   .say .in{gap:12px}
-  .say ul{display:none}
   .say h2{font-size:26px}
   .nav button:not(.pill){display:none}
   .travel{width:100%;justify-content:center}
@@ -150,15 +149,15 @@ dialog .pill[disabled]{opacity:.6}
   <section class="centre" id="open">
     <p class="eyebrow">Root-cause analyst for every business metric</p>
     <h1>Business runs on data.<br>Data runs on <em>Mahalanobis.</em></h1>
-    <p>When a metric moves, Mahalanobis tells you why. It connects your sources, builds the semantic layer, and delivers the cause with a next step.</p>
+    <p>Connects your data sources, builds the semantic layer, and finds why a metric moved.</p>
     <button class="go" id="go" aria-label="Travel into the data"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M6 14l6 6 6-6"/></svg></button>
     <button type="button" class="skip" id="skip">Skip to a finding</button>
-    <p class="partners">Working with five design partners, Series A to D</p>
+    <p class="partners">Five design partners, Series A to D</p>
   </section>
 
   <section class="centre" id="close">
-    <h2>See the shape of your own data.</h2>
-    <p>Connect one source. We show you the joins, the layer and the first root cause.</p>
+    <h2>Run it on your own data.</h2>
+    <p>Connect one source. You get the joins, the layer and a first root cause.</p>
     <button type="button" class="pill" id="demo" data-demo tabindex="-1">Book a demo</button>
   </section>
 
@@ -178,7 +177,7 @@ dialog .pill[disabled]{opacity:.6}
 <dialog id="demoDlg" aria-labelledby="demoTitle">
   <form id="demoForm" novalidate>
     <div class="dh"><h2 id="demoTitle">Book a demo</h2><button type="button" class="x" id="demoClose" aria-label="Close">Close</button></div>
-    <p class="dp">Tell us where to reach you. We reply within one working day.</p>
+    <p class="dp">Leave your details and we will write back.</p>
     <label for="dName">Name</label><input id="dName" name="name" autocomplete="name" required>
     <label for="dEmail">Work email</label><input id="dEmail" name="email" type="email" autocomplete="email" required>
     <label for="dCompany">Company</label><input id="dCompany" name="company" autocomplete="organization" required>
@@ -640,11 +639,12 @@ dialog .pill[disabled]{opacity:.6}
 
   var STEP=[0,0.17,0.43,0.8,1.0001];
   var SAY=[
-    ['Lost','Your data is scattered.\nNobody sees the whole.','Thousands of tables, files and fields, spread across every tool your business runs on.',['No shared keys','No documented joins','No single definition']],
-    ['Connect','Every join is found.\nEvery join is counted.','Mahalanobis finds what links one source to the next, and tests each link on every row.',['Keys found in the data itself','Each join counted row by row','Weak joins rejected']],
-    ['Semantic layer','The semantic layer\nbuilds itself.','Entities and metrics are proposed from the data and the code that writes it. Your team approves them.',['Entities from reconciled keys','Metrics with their formulas','Checked against your own totals','Accepted by a person']],
-    ['Root cause','A metric moves.\nYou get the cause.','Change point, segmentation and driver analyses run on the layer every day. Each candidate cause is tested on the rows. False alarms are suppressed.',['What moved, and since when','Every candidate cause tested','Ruled-out causes listed','False alarms suppressed','Same answer on every replay']]
+    ['Sources','Data sits in\nseparate sources.','',['Separate keys per source','No documented joins','No shared definitions']],
+    ['Connect','Sources are joined and\nevery join is counted.','',['Keys matched across sources','Each join counted on every row','Failed joins dropped']],
+    ['Semantic layer','The semantic layer is\nbuilt from the data.','',['Keys reconciled into entities','Metrics defined with formulas','Approved by your team']],
+    ['Root cause','When a metric moves,\nits cause is tested.','',['Change point, segmentation, drivers','Causes confirmed or ruled out','False alarms dropped','Next step, replayable']]
   ];
+
   var el={open:document.getElementById('open'),close:document.getElementById('close'),say:document.getElementById('say'),
     sayK:document.getElementById('sayK'),sayT:document.getElementById('sayT'),sayD:document.getElementById('sayD'),sayL:document.getElementById('sayL'),
     bar:document.getElementById('bar'),hint:document.getElementById('hint'),demo:document.getElementById('demo')};
@@ -652,7 +652,7 @@ dialog .pill[disabled]{opacity:.6}
   function fillSay(b){
     var d=SAY[b]; beatNow=b;
     el.sayK.innerHTML='<b>0'+(b+1)+'</b> / 04 &nbsp; '+d[0];
-    el.sayT.textContent=d[1]; el.sayD.textContent=d[2];
+    el.sayT.textContent=d[1]; el.sayD.textContent=d[2]; el.sayD.hidden=!d[2];
     el.sayL.innerHTML=d[3].map(function(x){ return '<li>'+x+'</li>'; }).join('');
   }
   function setBeat(b){
