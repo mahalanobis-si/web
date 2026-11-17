@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mahalanobis hero: lost to clear, in 3D</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:Inter,system-ui,sans-serif;color:#ffffff;background:#0E1116}
+a{color:#ffffff}a:hover{color:#7EA2FF}
+@keyframes mhSway{from{transform:rotateY(-5deg) rotateX(1.5deg)}to{transform:rotateY(5deg) rotateX(-1.5deg)}}
+@keyframes mhGlow{from{opacity:.35}to{opacity:1}}
+</style>
+</helmet>
+<div style="width: 1280px; height: 820px; box-sizing: border-box; padding: 28px 40px; background: #0E1116; color: #ffffff; font-family: Inter, system-ui, sans-serif; display: flex; flex-direction: column; gap: 16px">
+
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px">
+<h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 36px; line-height: 1.08; letter-spacing: -0.02em">Business runs on data.<br>Data runs on <span style="color: {{accent}}">Mahalanobis.</span></h1>
+<p aria-live="polite" style="margin: 0; max-width: 540px; font-size: 16px; line-height: 1.45; color: #AEB6C2; text-align: right"><span style="font-weight: 600; color: #ffffff">{{capTitle}}</span> {{capText}}</p>
+</div>
+
+<div onMouseMove="{{move}}" onMouseLeave="{{leave}}" style="position: relative; width: 1200px; height: 520px; background: #080A0E; border: 1px solid #2A313C; border-radius: 10px; overflow: hidden; perspective: 1100px">
+
+<div style="position: absolute; left: 0; top: 0; width: 1200px; height: 520px; transform-style: preserve-3d; transform: {{camTf}}; transition: transform 1.8s cubic-bezier(.3,.7,.2,1)">
+<div style="position: absolute; left: 0; top: 0; width: 1200px; height: 520px; transform-style: preserve-3d; transform: {{tiltTf}}; transition: transform .3s ease-out">
+<div style="position: absolute; left: 0; top: 0; width: 1200px; height: 520px; transform-style: preserve-3d; animation: mhSway 9s ease-in-out infinite alternate">
+
+<sc-for list="{{planes}}" as="pl" hint-placeholder-count="3">
+<div style="position: absolute; left: 50%; top: 50%; width: {{pl.w}}px; height: {{pl.h}}px; margin: {{pl.mt}}px 0 0 {{pl.ml}}px; box-sizing: border-box; border: 1px solid {{pl.bd}}; background: {{pl.bg}}; border-radius: 10px; transform: translate3d(0px, {{pl.y}}px, 0px) rotateX(90deg); opacity: {{planeO}}; transition: opacity 1.2s ease .6s"></div>
+</sc-for>
+
+<sc-for list="{{lines}}" as="l" hint-placeholder-count="18">
+<div style="position: absolute; left: 50%; top: 50%; width: {{l.len}}px; height: 3px; margin-top: -1.5px; background: {{accent}}; box-shadow: 0 0 12px {{accent}}; border-radius: 2px; transform-origin: 0 50%; transform: {{l.tf}}; opacity: {{l.o}}; transition: opacity .8s ease {{l.delay}}ms; animation: {{l.anim}}"></div>
+</sc-for>
+
+<sc-for list="{{slabs}}" as="s" hint-placeholder-count="50">
+<div style="position: absolute; left: 50%; top: 50%; width: 120px; height: 76px; margin: -38px 0 0 -60px; box-sizing: border-box; padding: 9px 10px; border-radius: 6px; border: 1.5px solid {{s.bd}}; background: {{s.bg}}; color: {{s.fg}}; opacity: {{s.o}}; box-shadow: {{s.glow}}; transform: {{s.tf}}; transition: transform 1.7s cubic-bezier(.2,.8,.2,1) {{s.delay}}ms, opacity 1s ease, background .8s ease {{s.delay}}ms, border-color .8s ease, box-shadow .8s ease; display: flex; flex-direction: column; gap: 6px">
+<div style="font-family: {{s.font}}; font-size: {{s.size}}px; font-weight: 600; line-height: 1.2; white-space: nowrap; overflow: hidden">{{s.label}}</div>
+<div style="height: 2px; width: 80%; background: {{s.rule}}"></div>
+<div style="height: 2px; width: 55%; background: {{s.rule}}"></div>
+<div style="height: 2px; width: 68%; background: {{s.rule}}"></div>
+</div>
+</sc-for>
+
+</div>
+</div>
+</div>
+
+<div style="position: absolute; left: 20px; top: 16px; display: flex; flex-direction: column; gap: 6px; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; opacity: {{planeO}}; transition: opacity .8s ease 1s">
+<div style="color: #ffffff">Top: analysis</div>
+<div style="color: {{accent}}">Middle: semantic layer</div>
+<div style="color: #AEB6C2">Base: your sources</div>
+</div>
+
+<div style="position: absolute; left: 884px; top: 20px; width: 296px; box-sizing: border-box; background: #ffffff; color: #111418; border-radius: 8px; padding: 16px; display: flex; flex-direction: column; gap: 8px; opacity: {{cardO}}; transform: translateY({{cardShift}}px); transition: opacity .6s .9s, transform .6s .9s">
+<div style="font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #4A5360">Found on its own</div>
+<div style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 17px; line-height: 1.25">[METRIC] fell [X]% in [SEGMENT]</div>
+<div style="font-size: 13px"><span style="font-weight: 600; color: #1F4FD8">Confirmed </span>[CAUSE 1], [CAUSE 2]</div>
+<div style="font-size: 13px; color: #4A5360"><span style="font-weight: 600">Ruled out </span><span style="text-decoration: line-through">[CAUSE 3], [CAUSE 4]</span></div>
+<div style="font-size: 13px; border-top: 1px solid #E1E5EA; padding-top: 8px"><span style="font-weight: 600">Next step </span>[ACTION]</div>
+</div>
+
+</div>
+
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px">
+<div role="group" aria-label="Stage" style="display: flex; gap: 8px">
+<sc-for list="{{pills}}" as="p" hint-placeholder-count="4">
+<button type="button" onClick="{{p.pick}}" aria-pressed="{{p.pressed}}" style="min-height: 44px; padding: 0 18px; border: 1px solid {{p.bd}}; background: {{p.bg}}; color: {{p.fg}}; border-radius: 999px; font: inherit; font-size: 14px; font-weight: 500; cursor: pointer; transition: background .3s, color .3s">{{p.label}}</button>
+</sc-for>
+</div>
+<div style="font-size: 14px; color: #AEB6C2">Move your pointer to look around.</div>
+<button type="button" onClick="{{toggleAuto}}" style="min-height: 44px; padding: 0 18px; border: 1px solid #6B7480; background: transparent; color: #ffffff; border-radius: 999px; font: inherit; font-size: 14px; cursor: pointer">{{autoLabel}}</button>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#7EA2FF","options":["#7EA2FF","#5FD4A8","#FFB36B","#ffffff"]},"stepMs":{"editor":"range","default":4600,"min":2500,"max":9000,"step":100,"unit":"ms"},"$preview":{"width":1280,"height":820}}'>
+class Component extends DCLogic {
+state = { stage: 0, auto: true, px: 0, py: 0 };
+componentDidMount() {
+var self = this;
+var ms = this.props.stepMs ?? 4600;
+this.timer = setInterval(function () {
+if (self.state.auto) self.setState({ stage: (self.state.stage + 1) % 4 });
+}, ms);
+}
+componentWillUnmount() { clearInterval(this.timer); }
+model() {
+if (this.m) return this.m;
+var seed = 4711;
+function rnd() { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; }
+function span(a, b) { return a + rnd() * (b - a); }
+var way = [[-480, 120, 200], [-300, -140, -80], [-90, 90, -320], [110, -60, -120], [260, 150, 60], [400, -120, -260], [540, 40, -40]];
+var entNames = ['Customer', 'Order', 'Payment', 'Product', 'Session', 'Account'];
+var metNames = ['Net revenue', 'Repeat rate', 'Refund rate', 'Churn'];
+var raw = ['cust_ref', 'ord_2019_v2', 'tbl_pay_final', 'sku_map', 'evt_raw', 'acct_old', 'amt_net', 'ledger.xlsx', 'stg_orders', 'refunds_tmp', 'crm_export', 'events_7d', 'fx_rates', 'users_bak', 'dim_region', 'inv_lines'];
+var slabs = [];
+for (var i = 0; i < 50; i++) {
+var s = { i: i };
+if (i < 7) {
+s.cx = way[i][0]; s.cy = way[i][1]; s.cz = way[i][2];
+s.rx = span(-18, 18); s.ry = span(-24, 24); s.rz = span(-8, 8);
+} else {
+s.cx = span(-640, 640); s.cy = span(-300, 300); s.cz = span(-750, 330);
+s.rx = span(-65, 65); s.ry = span(-65, 65); s.rz = span(-40, 40);
+}
+s.raw = raw[i % raw.length];
+if (i < 6) {
+s.kind = 'entity'; s.name = entNames[i];
+s.ox = ((i % 3) - 1) * 210; s.oy = 10; s.oz = (Math.floor(i / 3) - 0.5) * 130;
+} else if (i < 10) {
+s.kind = 'metric'; s.name = metNames[i - 6];
+s.ox = (i - 6 - 1.5) * 170; s.oy = -170; s.oz = 0;
+} else {
+s.kind = 'source'; s.name = s.raw;
+var k = i - 10;
+s.ox = ((k % 8) - 3.5) * 142; s.oy = 190; s.oz = (Math.floor(k / 8) - 2) * 100;
+}
+slabs.push(s);
+}
+function line(a, b) {
+var dx = b[0] - a[0], dy = b[1] - a[1], dz = b[2] - a[2];
+var h = Math.sqrt(dx * dx + dz * dz);
+var len = Math.sqrt(h * h + dy * dy);
+var yaw = Math.atan2(-dz, dx) * 180 / Math.PI;
+var pitch = Math.atan2(dy, h) * 180 / Math.PI;
+return {
+len: Math.round(len),
+tf: 'translate3d(' + a[0] + 'px,' + a[1] + 'px,' + a[2] + 'px) rotateY(' + yaw.toFixed(1) + 'deg) rotateZ(' + pitch.toFixed(1) + 'deg)'
+};
+}
+var chain = [];
+for (var c = 0; c < 6; c++) chain.push(line(way[c], way[c + 1]));
+var links = [];
+for (var e = 0; e < 6; e++) {
+var en = slabs[e], mt = slabs[6 + (e % 4)], sr = slabs[10 + e * 6 + 2];
+links.push(line([en.ox, en.oy, en.oz], [mt.ox, mt.oy, mt.oz]));
+links.push(line([sr.ox, sr.oy, sr.oz], [en.ox, en.oy, en.oz]));
+}
+this.m = { slabs: slabs, chain: chain, links: links };
+return this.m;
+}
+renderVals() {
+var self = this;
+var m = this.model();
+var st = this.state.stage;
+var accent = this.props.accent ?? '#7EA2FF';
+var ordered = st >= 2;
+var slabs = m.slabs.map(function (s) {
+var isWay = s.i < 7;
+var tf, o, bd, bg, fg, glow, label, font, size, rule;
+if (!ordered) {
+tf = 'translate3d(' + Math.round(s.cx) + 'px,' + Math.round(s.cy) + 'px,' + Math.round(s.cz) + 'px) rotateX(' + s.rx.toFixed(0) + 'deg) rotateY(' + s.ry.toFixed(0) + 'deg) rotateZ(' + s.rz.toFixed(0) + 'deg)';
+var depth = Math.max(0.22, Math.min(1, 0.22 + (s.cz + 750) / 1080 * 0.78));
+var found = st === 1 && isWay;
+o = st === 1 ? (isWay ? 1 : depth * 0.38) : depth;
+bd = found ? accent : '#3A4455';
+bg = '#141A22';
+fg = found ? '#ffffff' : '#AEB6C2';
+glow = found ? '0 0 28px ' + accent : 'none';
+label = s.raw; font = 'ui-monospace, Menlo, monospace'; size = 11; rule = '#2F3846';
+} else {
+tf = 'translate3d(' + s.ox + 'px,' + s.oy + 'px,' + s.oz + 'px) rotateX(90deg) rotateY(0deg) rotateZ(0deg)';
+o = 1;
+if (s.kind === 'entity') { bd = accent; bg = accent; fg = '#0E1116'; glow = '0 0 22px ' + accent; label = s.name; font = "'Space Grotesk', sans-serif"; size = 15; rule = 'rgba(14,17,22,.35)'; }
+else if (s.kind === 'metric') { bd = '#ffffff'; bg = '#ffffff'; fg = '#0E1116'; glow = st >= 3 ? '0 0 26px #ffffff' : 'none'; label = s.name; font = "'Space Grotesk', sans-serif"; size = 14; rule = 'rgba(14,17,22,.3)'; }
+else { bd = '#4A5566'; bg = '#141A22'; fg = '#AEB6C2'; glow = 'none'; label = s.raw; font = 'ui-monospace, Menlo, monospace'; size = 11; rule = '#2F3846'; }
+}
+return { tf: tf, o: o, bd: bd, bg: bg, fg: fg, glow: glow, label: label, font: font, size: size, rule: rule, delay: st === 1 && isWay ? s.i * 320 : s.i * 16 };
+});
+var lines = [];
+m.chain.forEach(function (l, i) {
+lines.push({ len: l.len, tf: l.tf, o: st === 1 ? 1 : 0, delay: st === 1 ? 200 + i * 320 : 0, anim: 'none' });
+});
+m.links.forEach(function (l, i) {
+lines.push({ len: l.len, tf: l.tf, o: ordered ? 0.9 : 0, delay: ordered ? 1300 + i * 60 : 0, anim: st >= 3 ? 'mhGlow .9s ease-in-out ' + (i * 90) + 'ms infinite alternate' : 'none' });
+});
+var planes = [
+{ w: 1200, h: 540, y: 196, bd: 'rgba(174,182,194,.35)', bg: 'rgba(174,182,194,.04)' },
+{ w: 700, h: 330, y: 16, bd: accent, bg: 'rgba(126,162,255,.07)' },
+{ w: 720, h: 150, y: -164, bd: 'rgba(255,255,255,.7)', bg: 'rgba(255,255,255,.05)' }
+].map(function (p) { p.mt = -p.h / 2; p.ml = -p.w / 2; return p; });
+var cams = [
+'translateZ(170px) rotateX(0deg) rotateY(0deg)',
+'translateZ(40px) rotateX(-4deg) rotateY(6deg)',
+'translateZ(-260px) rotateX(-34deg) rotateY(-22deg)',
+'translateZ(-200px) rotateX(-30deg) rotateY(-14deg)'
+];
+var labels = ['1 Lost', '2 A thread', '3 Order', '4 Clarity'];
+var pills = labels.map(function (label, i) {
+var active = i === st;
+return {
+label: label,
+pressed: active ? 'true' : 'false',
+bg: active ? '#ffffff' : 'transparent',
+fg: active ? '#0E1116' : '#ffffff',
+bd: active ? '#ffffff' : '#6B7480',
+pick: function () { self.setState({ stage: i, auto: false }); }
+};
+});
+var caps = [
+['Lost in it.', 'Thousands of tables, files and fields, and nobody can see the whole of it.'],
+['A thread.', 'Mahalanobis finds what links one source to the next and counts each link on every row.'],
+['Order.', 'Everything settles into place. Your sources at the base, the semantic layer built on top of them.'],
+['Clarity.', 'From up here the analysis runs on its own and tells you what changed and why.']
+];
+return {
+accent: accent,
+slabs: slabs, lines: lines, planes: planes, pills: pills,
+camTf: cams[st],
+tiltTf: 'rotateX(' + this.state.py + 'deg) rotateY(' + this.state.px + 'deg)',
+planeO: ordered ? 1 : 0,
+cardO: st >= 3 ? 1 : 0,
+cardShift: st >= 3 ? 0 : -16,
+capTitle: caps[st][0], capText: caps[st][1],
+autoLabel: this.state.auto ? 'Pause' : 'Play loop',
+toggleAuto: function () { self.setState({ auto: !self.state.auto }); },
+move: function (e) {
+var r = e.currentTarget.getBoundingClientRect();
+if (!r.width) return;
+var nx = (e.clientX - r.left) / r.width - 0.5;
+var ny = (e.clientY - r.top) / r.height - 0.5;
+var px = Math.round(nx * 24) / 2 * 1.5;
+var py = Math.round(-ny * 16) / 2 * 1.5;
+if (px !== self.state.px || py !== self.state.py) self.setState({ px: px, py: py });
+},
+leave: function () { self.setState({ px: 0, py: 0 }); }
+};
+}
+}
+</script>
+</body>
+</html>

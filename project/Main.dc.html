@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mahalanobis homepage wireframe</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:Inter,system-ui,sans-serif;color:#111418;background:#ffffff}
+a{color:#111418}a:hover{color:#1F4FD8}
+</style>
+</helmet>
+<div style="background: #ffffff; color: #111418; font-family: Inter, system-ui, sans-serif; font-size: 16px; line-height: 1.5">
+
+<!-- NAV -->
+<header style="border-bottom: 1px solid #D5D9DE">
+<div style="max-width: 1160px; margin: 0 auto; padding: 16px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
+<a href="#top" style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 20px; text-decoration: none; display: flex; align-items: center; gap: 10px; min-height: 44px">
+<svg aria-hidden="true" width="28" height="28" viewBox="0 0 28 28" fill="none"><ellipse cx="14" cy="14" rx="12" ry="6" transform="rotate(-30 14 14)" stroke="#111418" stroke-width="1.6"></ellipse><circle cx="22" cy="21" r="2.4" fill="{{accent}}"></circle></svg>
+Mahalanobis</a>
+<nav aria-label="Main" style="display: flex; flex-wrap: wrap; align-items: center; gap: 28px; font-size: 15px">
+<a href="#connect" style="text-decoration: none; min-height: 44px; display: flex; align-items: center">Connect</a>
+<a href="#layer" style="text-decoration: none; min-height: 44px; display: flex; align-items: center">Semantic layer</a>
+<a href="#analysis" style="text-decoration: none; min-height: 44px; display: flex; align-items: center">Analysis</a>
+<a href="#proof" style="text-decoration: none; min-height: 44px; display: flex; align-items: center">Proof</a>
+<a href="#demo" style="text-decoration: none; min-height: 44px; display: flex; align-items: center; padding: 0 18px; background: #111418; color: #ffffff; border-radius: 6px; font-weight: 500">Book a demo</a>
+</nav>
+</div>
+</header>
+
+<!-- HERO -->
+<section id="top" style="max-width: 1160px; margin: 0 auto; padding: 72px 24px 40px">
+<div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 20px">
+<h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(2.25rem, 5.2vw, 4.25rem); line-height: 1.05; letter-spacing: -0.02em; max-width: 900px">Business runs on data.<br>Data runs on <span style="color: {{accent}}">Mahalanobis.</span></h1>
+<p style="margin: 0; font-size: 1.2rem; color: #4A5360; max-width: 640px">Mahalanobis connects your scattered sources, builds the semantic layer from the data itself, and runs the analysis on top of it.</p>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 4px">
+<a href="#demo" style="text-decoration: none; min-height: 48px; display: flex; align-items: center; padding: 0 24px; background: {{accent}}; color: #ffffff; border-radius: 6px; font-weight: 600">Book a demo</a>
+<a href="#hero-visual" style="text-decoration: none; min-height: 48px; display: flex; align-items: center; padding: 0 24px; border: 1px solid #111418; border-radius: 6px; font-weight: 500">Watch the data fall into place</a>
+</div>
+</div>
+
+<!-- VISUAL 1 -->
+<div id="hero-visual" style="margin-top: 48px; border: 1.5px dashed #8A93A0; border-radius: 12px; background: #F6F7F9; padding: 24px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 20px">
+<span style="font-family: ui-monospace, Menlo, monospace; font-size: 12px; background: #111418; color: #ffffff; padding: 3px 8px; border-radius: 4px">VISUAL 1 of 5</span>
+<span style="font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: #4A5360">3D hero: lost inside the data, then order. Frame 3 shown flat here. Working 3D prototype on the next artboard.</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: stretch; gap: 20px">
+
+<div style="flex: 1 1 220px; display: flex; flex-direction: column; gap: 10px">
+<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #4A5360">Your sources</div>
+<div style="background: #ffffff; border: 1px solid #C3C9D1; border-radius: 6px; padding: 10px 12px; font-size: 14px">Orders database</div>
+<div style="background: #ffffff; border: 1px solid #C3C9D1; border-radius: 6px; padding: 10px 12px; font-size: 14px">Payments</div>
+<div style="background: #ffffff; border: 1px solid #C3C9D1; border-radius: 6px; padding: 10px 12px; font-size: 14px">CRM</div>
+<div style="background: #ffffff; border: 1px solid #C3C9D1; border-radius: 6px; padding: 10px 12px; font-size: 14px">Product events</div>
+<div style="background: #ffffff; border: 1px solid #C3C9D1; border-radius: 6px; padding: 10px 12px; font-size: 14px">Finance spreadsheet</div>
+<div style="background: #ffffff; border: 1px solid #C3C9D1; border-radius: 6px; padding: 10px 12px; font-size: 14px">Pipeline code</div>
+</div>
+
+<div aria-hidden="true" style="flex: 0 0 40px; display: flex; align-items: center; justify-content: center">
+<svg width="40" height="16" viewBox="0 0 40 16" fill="none"><path d="M0 8h36M30 2l6 6-6 6" stroke="#4A5360" stroke-width="1.5"></path></svg>
+</div>
+
+<div style="flex: 2 1 320px; display: flex; flex-direction: column; gap: 10px">
+<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: {{accent}}">Semantic layer, built for you</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+<div style="background: #ffffff; border: 1.5px solid #111418; border-radius: 6px; padding: 12px"><div style="font-weight: 600">Customer</div><div style="font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: #4A5360">customer_id</div></div>
+<div style="background: #ffffff; border: 1.5px solid #111418; border-radius: 6px; padding: 12px"><div style="font-weight: 600">Order</div><div style="font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: #4A5360">order_id</div></div>
+<div style="background: #ffffff; border: 1.5px solid #111418; border-radius: 6px; padding: 12px"><div style="font-weight: 600">Payment</div><div style="font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: #4A5360">payment_id</div></div>
+<div style="background: #ffffff; border: 1.5px solid #111418; border-radius: 6px; padding: 12px"><div style="font-weight: 600">Product</div><div style="font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: #4A5360">sku</div></div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<span style="border: 1px solid {{accent}}; color: {{accent}}; background: #ffffff; border-radius: 999px; padding: 4px 12px; font-size: 13px; font-weight: 500">Net revenue</span>
+<span style="border: 1px solid {{accent}}; color: {{accent}}; background: #ffffff; border-radius: 999px; padding: 4px 12px; font-size: 13px; font-weight: 500">Repeat rate</span>
+<span style="border: 1px solid {{accent}}; color: {{accent}}; background: #ffffff; border-radius: 999px; padding: 4px 12px; font-size: 13px; font-weight: 500">Refund rate</span>
+</div>
+</div>
+
+<div aria-hidden="true" style="flex: 0 0 40px; display: flex; align-items: center; justify-content: center">
+<svg width="40" height="16" viewBox="0 0 40 16" fill="none"><path d="M0 8h36M30 2l6 6-6 6" stroke="#4A5360" stroke-width="1.5"></path></svg>
+</div>
+
+<div style="flex: 1 1 260px; display: flex; flex-direction: column; gap: 10px">
+<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #4A5360">Analysis</div>
+<div style="background: #ffffff; border: 1px solid #C3C9D1; border-radius: 6px; padding: 12px; display: flex; justify-content: center">
+<svg role="img" aria-label="Scatter of rows inside an ellipse with one point outside it" width="220" height="120" viewBox="0 0 220 120" fill="none">
+<ellipse cx="110" cy="60" rx="90" ry="26" transform="rotate(-24 110 60)" stroke="#111418" stroke-width="1.2" stroke-dasharray="4 4"></ellipse>
+<g fill="#8A93A0"><circle cx="40" cy="88" r="3"></circle><circle cx="58" cy="76" r="3"></circle><circle cx="66" cy="86" r="3"></circle><circle cx="82" cy="70" r="3"></circle><circle cx="92" cy="78" r="3"></circle><circle cx="100" cy="60" r="3"></circle><circle cx="112" cy="66" r="3"></circle><circle cx="120" cy="52" r="3"></circle><circle cx="134" cy="58" r="3"></circle><circle cx="142" cy="44" r="3"></circle><circle cx="156" cy="46" r="3"></circle><circle cx="170" cy="34" r="3"></circle><circle cx="182" cy="32" r="3"></circle></g>
+<circle cx="168" cy="96" r="5" fill="{{accent}}"></circle>
+</svg>
+</div>
+<div style="background: #ffffff; border: 1.5px solid {{accent}}; border-radius: 6px; padding: 12px; font-size: 14px"><div style="font-weight: 600">[METRIC] moved in [SEGMENT]</div><div style="color: #4A5360">2 causes confirmed. 3 ruled out.</div></div>
+</div>
+
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; justify-content: center">
+<button type="button" style="min-height: 44px; padding: 0 16px; border: 1px solid #8A93A0; background: #ffffff; border-radius: 999px; font: inherit; font-size: 14px; color: #111418">1 Lost</button>
+<button type="button" style="min-height: 44px; padding: 0 16px; border: 1px solid #8A93A0; background: #ffffff; border-radius: 999px; font: inherit; font-size: 14px; color: #111418">2 A thread</button>
+<button type="button" style="min-height: 44px; padding: 0 16px; border: 1px solid #8A93A0; background: #ffffff; border-radius: 999px; font: inherit; font-size: 14px; background: #111418; color: #ffffff">3 Order</button>
+<button type="button" style="min-height: 44px; padding: 0 16px; border: 1px solid #8A93A0; background: #ffffff; color: #111418; border-radius: 999px; font: inherit; font-size: 14px">4 Clarity</button>
+<button type="button" style="min-height: 44px; padding: 0 16px; border: 1px dashed {{accent}}; background: #ffffff; color: {{accent}}; border-radius: 999px; font: inherit; font-size: 14px">+ Add a source</button>
+</div>
+</div>
+
+<!-- LOGOS -->
+<div style="margin-top: 40px; display: flex; flex-direction: column; align-items: center; gap: 16px">
+<div style="font-size: 13px; color: #4A5360">Design partners</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px">
+<div style="width: 140px; height: 44px; border: 1px dashed #8A93A0; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #4A5360">[PARTNER LOGO]</div>
+<div style="width: 140px; height: 44px; border: 1px dashed #8A93A0; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #4A5360">[PARTNER LOGO]</div>
+<div style="width: 140px; height: 44px; border: 1px dashed #8A93A0; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #4A5360">[PARTNER LOGO]</div>
+<div style="width: 140px; height: 44px; border: 1px dashed #8A93A0; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #4A5360">[PARTNER LOGO]</div>
+<div style="width: 140px; height: 44px; border: 1px dashed #8A93A0; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #4A5360">[PARTNER LOGO]</div>
+</div>
+</div>
+</section>
+
+<!-- SECTION 2 CONNECT -->
+<section id="connect" style="border-top: 1px solid #D5D9DE">
+<div style="max-width: 1160px; margin: 0 auto; padding: 88px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 56px">
+<div style="flex: 1 1 380px; display: flex; flex-direction: column; gap: 16px">
+<div style="font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: {{accent}}">01 Connect</div>
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.12; letter-spacing: -0.01em">Sources that have never met, joined and counted.</h2>
+<p style="margin: 0; color: #4A5360; font-size: 1.05rem">Point Mahalanobis at your databases, files and pipeline code. It finds the keys and joins between them and counts each one on every row, so you see which links hold and which break.</p>
+<ul style="margin: 0; padding-left: 20px; color: #111418; display: flex; flex-direction: column; gap: 6px">
+<li>Warehouses, databases, spreadsheets and event streams</li>
+<li>Reads dbt and pipeline code where it exists</li>
+<li>Nobody draws the diagram by hand</li>
+</ul>
+</div>
+<div style="flex: 1 1 460px; border: 1.5px dashed #8A93A0; border-radius: 12px; background: #F6F7F9; padding: 24px; display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px">
+<span style="font-family: ui-monospace, Menlo, monospace; font-size: 12px; background: #111418; color: #ffffff; padding: 3px 8px; border-radius: 4px">VISUAL 2 of 5</span>
+<span style="font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: #4A5360">One join, close up. Line draws, counter runs.</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px">
+<div style="flex: 1 1 150px; background: #ffffff; border: 1px solid #C3C9D1; border-radius: 6px; overflow: hidden; font-family: ui-monospace, Menlo, monospace; font-size: 13px">
+<div style="padding: 8px 12px; background: #E9ECF0; font-weight: 600">orders</div>
+<div style="padding: 8px 12px; border-top: 1px solid #E1E5EA">order_id</div>
+<div style="padding: 8px 12px; border-top: 1px solid #E1E5EA; background: #111418; color: #ffffff">cust_ref</div>
+<div style="padding: 8px 12px; border-top: 1px solid #E1E5EA">amount</div>
+</div>
+<div style="flex: 1 1 130px; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center">
+<div style="width: 100%; height: 2px; background: {{accent}}"></div>
+<div style="font-weight: 600; font-size: 15px">[N] of [N] rows match</div>
+<div style="font-size: 12px; color: #4A5360">0 orphans. 0 duplicates.</div>
+</div>
+<div style="flex: 1 1 150px; background: #ffffff; border: 1px solid #C3C9D1; border-radius: 6px; overflow: hidden; font-family: ui-monospace, Menlo, monospace; font-size: 13px">
+<div style="padding: 8px 12px; background: #E9ECF0; font-weight: 600">crm_accounts</div>
+<div style="padding: 8px 12px; border-top: 1px solid #E1E5EA; background: #111418; color: #ffffff">customer_id</div>
+<div style="padding: 8px 12px; border-top: 1px solid #E1E5EA">segment</div>
+<div style="padding: 8px 12px; border-top: 1px solid #E1E5EA">region</div>
+</div>
+</div>
+<div style="font-size: 13px; color: #4A5360">Hover a second join to see one that fails: the line turns dashed and shows the rows that do not match.</div>
+</div>
+</div>
+</section>
+
+<!-- SECTION 3 SEMANTIC LAYER -->
+<section id="layer" style="border-top: 1px solid #D5D9DE; background: #FAFBFC">
+<div style="max-width: 1160px; margin: 0 auto; padding: 88px 24px; display: flex; flex-wrap: wrap-reverse; align-items: center; gap: 56px">
+<div style="flex: 1 1 460px; border: 1.5px dashed #8A93A0; border-radius: 12px; background: #F6F7F9; padding: 24px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px">
+<span style="font-family: ui-monospace, Menlo, monospace; font-size: 12px; background: #111418; color: #ffffff; padding: 3px 8px; border-radius: 4px">VISUAL 3 of 5</span>
+<span style="font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: #4A5360">A definition writes itself, line by line.</span>
+</div>
+<div style="background: #ffffff; border: 1px solid #C3C9D1; border-radius: 8px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px">
+<div style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 20px">Net revenue</div>
+<span style="font-size: 12px; border: 1px solid {{accent}}; color: {{accent}}; border-radius: 999px; padding: 2px 10px">Proposed metric</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 10px; font-size: 14px">
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><span style="flex: 0 0 96px; color: #4A5360">Formula</span><span style="flex: 1 1 200px; font-family: ui-monospace, Menlo, monospace; font-size: 13px">sum(orders.amount) - sum(refunds.amount)</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><span style="flex: 0 0 96px; color: #4A5360">Built from</span><span style="flex: 1 1 200px">Orders database, Payments</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><span style="flex: 0 0 96px; color: #4A5360">Joins used</span><span style="flex: 1 1 200px">Order to Payment, Order to Customer</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><span style="flex: 0 0 96px; color: #4A5360">Check</span><span style="flex: 1 1 200px">Matches the finance spreadsheet total on [N] of [N] days</span></div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<button type="button" style="min-height: 44px; padding: 0 18px; background: #111418; color: #ffffff; border: 1px solid #111418; border-radius: 6px; font: inherit; font-size: 14px; font-weight: 500">Accept</button>
+<button type="button" style="min-height: 44px; padding: 0 18px; background: #ffffff; color: #111418; border: 1px solid #8A93A0; border-radius: 6px; font: inherit; font-size: 14px">Edit</button>
+</div>
+</div>
+</div>
+<div style="flex: 1 1 380px; display: flex; flex-direction: column; gap: 16px">
+<div style="font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: {{accent}}">02 Understand</div>
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.12; letter-spacing: -0.01em">The semantic layer builds itself. You approve it.</h2>
+<p style="margin: 0; color: #4A5360; font-size: 1.05rem">Entities, metrics and their formulas are proposed from the data and the code that writes it. Each proposal comes with the check it passed. Your team accepts or edits. Nobody starts from a blank file.</p>
+<ul style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px">
+<li>Definitions tied to the rows they were checked on</li>
+<li>Updates itself when a source changes</li>
+<li>Exports to dbt</li>
+</ul>
+</div>
+</div>
+</section>
+
+<!-- SECTION 4 ANALYSIS -->
+<section id="analysis" style="border-top: 1px solid #D5D9DE">
+<div style="max-width: 1160px; margin: 0 auto; padding: 88px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 56px">
+<div style="flex: 1 1 380px; display: flex; flex-direction: column; gap: 16px">
+<div style="font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: {{accent}}">03 Analyse</div>
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.12; letter-spacing: -0.01em">Agentic analysis that starts before you ask.</h2>
+<p style="margin: 0; color: #4A5360; font-size: 1.05rem">On top of the layer, Mahalanobis watches every metric, tests the possible causes when one moves, and brings you the finding with the next step. The agent chooses what to look at. Tested statistical tools compute every number.</p>
+<ul style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px">
+<li>What moved, what was observed, which causes held</li>
+<li>Causes that were tested and ruled out are listed</li>
+<li>Arrives in the app or by email</li>
+</ul>
+</div>
+<div style="flex: 1 1 460px; border: 1.5px dashed #8A93A0; border-radius: 12px; background: #F6F7F9; padding: 24px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px">
+<span style="font-family: ui-monospace, Menlo, monospace; font-size: 12px; background: #111418; color: #ffffff; padding: 3px 8px; border-radius: 4px">VISUAL 4 of 5</span>
+<span style="font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: #4A5360">Insight card. Causes tick or strike through in turn.</span>
+</div>
+<div style="background: #ffffff; border: 1px solid #C3C9D1; border-radius: 8px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #4A5360">Problem</div>
+<div style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 20px; line-height: 1.25">[METRIC] fell [X]% in [SEGMENT] since [DATE]</div>
+<div style="height: 64px; border: 1px dashed #8A93A0; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #4A5360">[TREND CHART WITH THE CHANGE POINT MARKED]</div>
+<div style="display: flex; flex-direction: column; gap: 8px; font-size: 14px">
+<div style="display: flex; gap: 10px; align-items: flex-start"><span style="flex: 0 0 84px; font-size: 12px; font-weight: 600; color: {{accent}}">CONFIRMED</span><span>[CAUSE 1], accounts for [SHARE] of the change</span></div>
+<div style="display: flex; gap: 10px; align-items: flex-start"><span style="flex: 0 0 84px; font-size: 12px; font-weight: 600; color: {{accent}}">CONFIRMED</span><span>[CAUSE 2], accounts for [SHARE] of the change</span></div>
+<div style="display: flex; gap: 10px; align-items: flex-start; color: #4A5360"><span style="flex: 0 0 84px; font-size: 12px; font-weight: 600">RULED OUT</span><span style="text-decoration: line-through">[CAUSE 3], [CAUSE 4], [CAUSE 5]</span></div>
+</div>
+<div style="border-top: 1px solid #E1E5EA; padding-top: 12px; font-size: 14px"><span style="font-weight: 600">Next step: </span>[ACTION] for [OWNER]</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- SECTION 5 PROOF -->
+<section id="proof" style="border-top: 1px solid #D5D9DE; background: #FAFBFC">
+<div style="max-width: 1160px; margin: 0 auto; padding: 88px 24px; display: flex; flex-direction: column; align-items: center; gap: 32px">
+<div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px; max-width: 720px">
+<div style="font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: {{accent}}">04 Proof</div>
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.12; letter-spacing: -0.01em">Ask twice. Get the same answer.</h2>
+<p style="margin: 0; color: #4A5360; font-size: 1.05rem">Every number is computed by the engine, traced to its rows, and replays to the identical result.</p>
+</div>
+<div style="width: 100%; box-sizing: border-box; border: 1.5px dashed #8A93A0; border-radius: 12px; background: #F6F7F9; padding: 24px; display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px">
+<span style="font-family: ui-monospace, Menlo, monospace; font-size: 12px; background: #111418; color: #ffffff; padding: 3px 8px; border-radius: 4px">VISUAL 5 of 5</span>
+<span style="font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: #4A5360">Two runs side by side. Press Replay, the right side recomputes and matches.</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: stretch; gap: 16px">
+<div style="flex: 1 1 280px; background: #ffffff; border: 1px solid #C3C9D1; border-radius: 8px; padding: 20px; display: flex; flex-direction: column; gap: 8px">
+<div style="font-size: 12px; color: #4A5360">Run on [DATE 1]</div>
+<div style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 28px">[VALUE]</div>
+<div style="font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: #4A5360">run id [HASH]</div>
+</div>
+<div style="flex: 0 1 120px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px">
+<div style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 28px; color: {{accent}}">=</div>
+<button type="button" style="min-height: 44px; padding: 0 16px; background: #ffffff; color: #111418; border: 1px solid #111418; border-radius: 6px; font: inherit; font-size: 14px">Replay</button>
+</div>
+<div style="flex: 1 1 280px; background: #ffffff; border: 1px solid #C3C9D1; border-radius: 8px; padding: 20px; display: flex; flex-direction: column; gap: 8px">
+<div style="font-size: 12px; color: #4A5360">Replayed on [DATE 2]</div>
+<div style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 28px">[VALUE]</div>
+<div style="font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: #4A5360">run id [HASH]</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- CTA -->
+<section id="demo" style="border-top: 1px solid #D5D9DE; background: #111418; color: #ffffff">
+<div style="max-width: 760px; margin: 0 auto; padding: 88px 24px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 20px">
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(1.75rem, 3.4vw, 2.75rem); line-height: 1.1">See the map of your own data.</h2>
+<p style="margin: 0; color: #C3C9D1; font-size: 1.05rem">Connect one source in a pilot and we will show you the joins, the layer and the first findings.</p>
+<form style="width: 100%; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 8px">
+<label for="email" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%)">Work email</label>
+<input id="email" type="email" placeholder="Work email" style="flex: 1 1 260px; max-width: 360px; min-height: 48px; box-sizing: border-box; padding: 0 14px; border: 1px solid #8A93A0; border-radius: 6px; background: #ffffff; color: #111418; font: inherit">
+<button type="button" style="min-height: 48px; padding: 0 24px; background: {{accent}}; color: #ffffff; border: 0; border-radius: 6px; font: inherit; font-weight: 600">Book a demo</button>
+</form>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer style="background: #111418; color: #C3C9D1; border-top: 1px solid #3A4250">
+<div style="max-width: 1160px; margin: 0 auto; padding: 28px 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-size: 14px">
+<div>Mahalanobis.si</div>
+<div style="display: flex; flex-wrap: wrap; gap: 24px"><span>Security</span><span>Docs</span><span>Company</span><span>[CONTACT EMAIL]</span></div>
+</div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#1F4FD8","options":["#1F4FD8","#0B6E4F","#B4410E","#111418"]},"$preview":{"width":1440,"height":3900}}'>
+class Component extends DCLogic {
+renderVals() {
+return { accent: this.props.accent ?? '#1F4FD8' };
+}
+}
+</script>
+</body>
+</html>
