@@ -84,12 +84,12 @@ dialog .pill[disabled]{opacity:.6}
 
 .bottom{display:flex;align-items:flex-end;justify-content:flex-end;gap:24px;flex-wrap:wrap}
 .scrim2{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0;background:radial-gradient(ellipse 50% 46% at 8% 88%,rgba(4,6,10,.95) 0%,rgba(4,6,10,.86) 48%,rgba(4,6,10,0) 100%)}
-.say{position:absolute;left:max(16px,calc(env(safe-area-inset-left,0px) + 3vw));bottom:calc(26px + env(safe-area-inset-bottom,0px));width:min(600px,calc(100vw - 32px));display:flex;flex-direction:column;gap:20px;opacity:0;text-shadow:0 0 18px var(--night),0 0 6px var(--night)}
+.say{position:absolute;left:max(16px,calc(env(safe-area-inset-left,0px) + 3vw));bottom:calc(64px + env(safe-area-inset-bottom,0px));width:min(760px,calc(100vw - 32px));display:flex;flex-direction:column;gap:20px;opacity:0;text-shadow:0 0 18px var(--night),0 0 6px var(--night)}
 .say .in{display:flex;flex-direction:column;gap:20px;transition:opacity .35s ease,transform .35s ease}
 .say.swap .in{opacity:0;transform:translateY(10px)}
-.say .k{font-family:var(--data);font-size:12px;letter-spacing:.02em;text-transform:uppercase;color:var(--mist)}
+.say .k{font-family:var(--data);font-size:15px;letter-spacing:.02em;text-transform:uppercase;color:var(--mist)}
 .say .k b{font-weight:400;color:var(--ink)}
-.say h2{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(30px,3.4vw,48px);line-height:1;letter-spacing:-.03em;white-space:pre-line}
+.say h2{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(36px,4.4vw,64px);line-height:1;letter-spacing:-.03em;white-space:pre-line}
 .say p{margin:0;max-width:46em;font-family:var(--data);font-size:12px;line-height:1.25;text-transform:uppercase}
 .say ul{position:relative;list-style:none;margin:4px 0 0 0;padding:0 0 0 26px;display:flex;flex-direction:column;gap:2px;font-family:var(--data);font-size:12px;line-height:1.25;text-transform:uppercase}
 .say ul::before{content:"";position:absolute;left:0;top:-2px;bottom:-2px;width:5px;border:1px solid var(--ember);border-right:0}
@@ -155,10 +155,18 @@ dialog .pill[disabled]{opacity:.6}
   .bottom{justify-content:center;text-align:center}
   #close{top:34%}
   dialog input:not(.sr){font-size:16px}
-  .say{bottom:calc(64px + env(safe-area-inset-bottom,0px));gap:10px}
+  .say{bottom:calc(92px + env(safe-area-inset-bottom,0px));gap:10px}
+  .say .k{font-size:14px}
+  .centre p{font-size:14px;line-height:1.4}
+  #ana{font-size:13px}
+  .note{font-size:14px}
+  .note .h{font-size:12px}
+  .note .k,.note .r,.note.fin .r{font-size:13px}
+  .note .act{font-size:14px}
+  .travel{font-size:13px}
   #ana{left:16px;right:16px;bottom:auto;top:calc(84px + env(safe-area-inset-top,0px));transform:none;width:auto;padding:10px 12px;border-radius:10px;background:rgba(4,6,10,.78)}
   .say .in{gap:12px}
-  .say h2{font-size:26px}
+  .say h2{font-size:34px}
   .nav button:not(.pill){display:none}
   .travel{width:100%;justify-content:center}
 }
