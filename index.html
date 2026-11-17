@@ -52,9 +52,10 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
 .centre,.travel,.top{text-shadow:0 0 18px var(--night),0 0 6px var(--night)}
 .pill{text-shadow:none}
 .centre .pill{border:0}
+@media (min-width:1000px){.centre p.one{max-width:none;white-space:nowrap}}
 .centre p{margin:0;max-width:40em;font-size:clamp(12px,1.05vw,15px);line-height:1.3;text-transform:uppercase;color:var(--ink)}
 #open,#close{transition:opacity .5s ease}
-#close{opacity:0;top:38%}
+#close{opacity:0;top:36%}
 .go{display:grid;place-items:center;width:58px;height:58px;border:1.5px solid var(--ink);border-radius:50%;transition:background .3s,color .3s}
 .go:hover{background:var(--ink);color:var(--night)}
 .eyebrow{font-family:var(--data);font-size:clamp(11px,1vw,14px)!important;letter-spacing:.14em;color:var(--ember)!important}
@@ -141,12 +142,17 @@ dialog .pill[disabled]{opacity:.6}
 .note .ok{color:#86e0b4}.note .no{color:var(--ember)}
 .note .st{display:inline-block;transition:color .4s}
 @media (max-width:760px){.note{width:min(300px,calc(100vw - 32px))}}
+#ana{position:fixed;left:50%;bottom:calc(74px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:2;pointer-events:none;opacity:0;width:min(520px,calc(100vw - 32px));display:flex;flex-direction:column;gap:5px;font-family:var(--data);font-size:12px;text-transform:uppercase;letter-spacing:.04em;text-shadow:0 0 14px var(--night),0 0 5px var(--night)}
+#ana .al{display:flex;justify-content:space-between;gap:16px;color:var(--mist);transition:color .3s}
+#ana .al.run{color:var(--ember)}
+#ana .al.done{color:var(--ink)}
+#ana .as{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 #fail{position:fixed;left:0;right:0;bottom:90px;z-index:3;text-align:center;font-size:14px;color:var(--mist);padding:0 16px}
 
 @media (max-width:760px){
   .nav a:not(.pill){display:none}
   .bottom{justify-content:center;text-align:center}
-  #close{top:36%}
+  #close{top:34%}
   .say{top:84px;gap:12px}
   .say .in{gap:12px}
   .say h2{font-size:26px}
@@ -172,12 +178,9 @@ dialog .pill[disabled]{opacity:.6}
   </header>
 
   <section class="centre" id="open">
-    <p class="eyebrow">Root-cause analyst for every business metric</p>
     <h1>Business runs on data.<br>Data runs on <em>Mahalanobis.</em></h1>
-    <p>Connects your data sources, builds the semantic layer, and finds why a metric moved.</p>
+    <p class="one">Connects your data sources, builds the semantic layer, and finds why a metric moved.</p>
     <button class="go" id="go" aria-label="Travel into the data"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M6 14l6 6 6-6"/></svg></button>
-    <button type="button" class="skip" id="skip">Skip to a finding</button>
-    <p class="partners">Five design partners, Series A to D</p>
   </section>
 
   <section class="centre" id="close">
@@ -197,6 +200,12 @@ dialog .pill[disabled]{opacity:.6}
 
 <svg class="leaders" id="leaders" aria-hidden="true"></svg>
 <div id="notes" aria-hidden="true"></div>
+<div id="ana" aria-hidden="true">
+  <div class="al" data-a="0" data-b="0.33"><span class="an">Segmentation</span><span class="as"></span></div>
+  <div class="al" data-a="0.33" data-b="0.62"><span class="an">Change point detection</span><span class="as"></span></div>
+  <div class="al" data-a="0.62" data-b="0.84"><span class="an">Driver analysis</span><span class="as"></span></div>
+  <div class="al" data-a="0.84" data-b="1"><span class="an">Cause testing</span><span class="as"></span></div>
+</div>
 <div id="fail" hidden></div>
 
 <dialog id="demoDlg" aria-labelledby="demoTitle">
@@ -248,11 +257,11 @@ dialog .pill[disabled]{opacity:.6}
   function gauss(){ var u=0,v=0; while(u===0)u=rnd(); while(v===0)v=rnd(); return Math.sqrt(-2*Math.log(u))*Math.cos(6.2831853*v); }
   var i, a;
   var CZ=-1620, ca=Math.cos(0.42), sa=Math.sin(0.42), SU=108*W, SV=34;
-  var DL=[], DH=[], DS=[], DK=[], DF=[], DV=[];
+  var DL=[], DH=[], DS=[], DK=[], DF=[], DV=[], DA=[];
   /* kind 0 = cell, 1 = key cell, 3 = row in the final picture; flag 1 = part of the pattern */
-  function dot(home,k,flag,val,lost){
+  function dot(home,k,flag,val,lost,alt){
     var l=lost||[home.x+(rnd()-.5)*900, home.y+(rnd()-.5)*520, home.z+(rnd()-.5)*340];
-    DL.push(l[0],l[1],l[2]); DH.push(home.x,home.y,home.z); DS.push(rnd()); DK.push(k); DF.push(flag?1:0); DV.push(val);
+    DL.push(l[0],l[1],l[2]); DH.push(home.x,home.y,home.z); DS.push(rnd()); DK.push(k); DF.push(flag?1:0); DV.push(val); var al=alt||home; DA.push(al.x,al.y,al.z);
   }
   function pick(n,of){ var out=[]; while(out.length<n){ var r=Math.floor(rnd()*of); if(out.indexOf(r)<0) out.push(r); } return out; }
 
@@ -473,22 +482,6 @@ dialog .pill[disabled]{opacity:.6}
       addTube(at(srcE,0,18),at(M,k2?10:-10,-11.8),0xeef1f7,0.36);
     }
   }
-  /* analyses: the techniques that run on the layer, drawn from the same dots */
-  var AZ=-1300, gPrev, gP, gi, gk;
-  function gp(x,y){ return new THREE.Vector3(gcx+(x-gcx)*1.5,-34+(y+34)*1.5-14,AZ); }
-  var gcx=0;
-  var cpx=-118*W; gPrev=null; gcx=cpx;
-  for(gi=0;gi<22;gi++){ gP=gp(cpx-26+gi*2.5,-34+(gi<13?0:11)+gauss()*1.3); dot(gP,0,gi>=13,rnd()); if(gPrev) addThread(gPrev,gP,gi>=13?0xffb46b:0x8fb0ff,gi>=13); gPrev=gP; }
-  addThread(gp(cpx-26+12.5*2.5,-46),gp(cpx-26+12.5*2.5,-14),0xeef1f7,false);
-  addTag(labelTex('change point detection','#dfe4ee'),72,9,cpx,-84,AZ);
-  gcx=0;
-  var cents=[[-14,-36],[2,-22],[15,-40]];
-  for(gk=0;gk<3;gk++){ var gC=gp(cents[gk][0],cents[gk][1]); for(gi=0;gi<12;gi++){ gP=gp(cents[gk][0]+gauss()*3.6,cents[gk][1]+gauss()*3.2); dot(gP,gk===2?1:0,gk===2,rnd()); if(gi<5) addThread(gC,gP,gk===2?0xffb46b:0x8fb0ff,gk===2); } }
-  addTag(labelTex('segmentation','#dfe4ee'),72,9,0,-84,AZ);
-  var dvx=118*W, lens=[14,8,5,3]; gcx=dvx;
-  for(gk=0;gk<4;gk++){ gPrev=null; for(gi=0;gi<lens[gk];gi++){ gP=gp(dvx-20+gi*3,-22-gk*6); dot(gP,0,gk===0,rnd()); if(gPrev) addThread(gPrev,gP,gk===0?0xffb46b:0x8fb0ff,gk===0); gPrev=gP; } }
-  addTag(labelTex('driver analysis','#dfe4ee'),72,9,dvx,-84,AZ);
-  var analysisAnchor=gp(dvx+22,-30);
   addTag(wordTex('SEMANTIC LAYER','#8fb0ff'),96,12,0,84,-540).early=true;
   addTag(wordTex('YOUR SOURCES','#b9c3d3'),96,12,0,-78,-540).early=true;
   addTag(wordTex('ANALYSIS','#eef1f7'),96,12,0,84,-1150).early=true;
@@ -505,7 +498,7 @@ dialog .pill[disabled]{opacity:.6}
   function rowLost(){ return [(rnd()-.5)*1000,(rnd()-.5)*580,400-rnd()*1750]; }
   var NROW=small?6000:15000;
   for(i=0;i<NROW;i++){ var u1=gauss()*SU, v1=gauss()*SV; dot(new THREE.Vector3(u1*ca-v1*sa,u1*sa+v1*ca,CZ+gauss()*50),3,false,rnd(),rowLost()); }
-  for(i=0;i<140;i++){ dot(new THREE.Vector3(OX+gauss()*7*W,OY+gauss()*5,CZ+gauss()*8),3,true,rnd(),rowLost()); }
+  for(i=0;i<140;i++){ var au=(0.9+Math.abs(gauss())*0.7)*SU, av=gauss()*SV*0.8; dot(new THREE.Vector3(OX+gauss()*7*W,OY+gauss()*5,CZ+gauss()*8),3,true,rnd(),rowLost(),new THREE.Vector3(au*ca-av*sa,au*sa+av*ca,CZ+gauss()*40)); }
   var chain=patternAnchor.filter(function(v){ return !!v; });
   for(i=1;i<chain.length;i++) addThread(chain[i-1],chain[i],0xffb46b,true);
   if(chain.length) addThread(chain[chain.length-1],new THREE.Vector3(OX,OY,CZ),0xffb46b,true);
@@ -522,15 +515,9 @@ dialog .pill[disabled]{opacity:.6}
   });
   var emberRing=tex(64,64,function(g){ g.strokeStyle='rgba(255,180,107,1)'; g.lineWidth=5; g.beginPath(); g.arc(32,32,24,0,6.2832); g.stroke(); g.fillStyle='rgba(255,180,107,1)'; g.beginPath(); g.arc(32,32,10,0,6.2832); g.fill(); });
   function endSprite(map,x,y,w,h){ var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:map,transparent:true,depthTest:false,depthWrite:false,opacity:0})); sp.position.set(x,y,CZ); sp.scale.set(w,h,1); sp.renderOrder=3; scene.add(sp); supp.push(sp); }
-  var causes=[['courier switch: confirmed',true],['price change: ruled out',false],['product mix: ruled out',false],['seasonality: ruled out',false]];
-  var root=new THREE.Vector3(OX,OY,CZ);
-  for(i=0;i<causes.length;i++){
-    var cnx=OX-26*W, cny=OY-18-15*i, ok=causes[i][1];
-    addThread(root,new THREE.Vector3(cnx,cny,CZ),ok?0xffb46b:0x9aa6b8,ok);
-    endSprite(ok?emberRing:ringTex,cnx,cny,ok?8:6,ok?8:6);
-    if(!small) endSprite(labelTex(causes[i][0],ok?'#ffb46b':'#b9c3d3'),cnx-50,cny,92,11.5);
-  }
-  if(!small) endSprite(labelTex('causes tested','#eef1f7'),OX-76*W,OY-4,92,11.5);
+  /* the sweep line used while change point detection runs inside the cloud */
+  var sweep=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,-3.3*SV,0),new THREE.Vector3(0,3.3*SV,0)]),new THREE.LineBasicMaterial({color:0xeef1f7,transparent:true,depthTest:false,depthWrite:false,opacity:0}));
+  sweep.rotation.z=0.42; sweep.renderOrder=3; sweep.frustumCulled=false; scene.add(sweep);
   var rings=[];
   for(var rg=1;rg<=3;rg++){
     var pts=[]; for(var k4=0;k4<=128;k4++){ a=k4/128*6.2831853; var uu=Math.cos(a)*SU*rg, vv=Math.sin(a)*SV*rg; pts.push(new THREE.Vector3(uu*ca-vv*sa,uu*sa+vv*ca,CZ)); }
@@ -552,15 +539,16 @@ dialog .pill[disabled]{opacity:.6}
   geo.setAttribute('aKind',new THREE.Float32BufferAttribute(DK,1));
   geo.setAttribute('aFlag',new THREE.Float32BufferAttribute(DF,1));
   geo.setAttribute('aVal',new THREE.Float32BufferAttribute(DV,1));
+  geo.setAttribute('aAlt',new THREE.Float32BufferAttribute(DA,3));
   var uniforms={
-    uEnd:{value:0}, uPattern:{value:0}, uTime:{value:0}, uCamZ:{value:420}, uFar:{value:380}, uMouse:{value:new THREE.Vector2(9,9)},
+    uEnd:{value:0}, uAna:{value:0}, uSU:{value:SU}, uPattern:{value:0}, uTime:{value:0}, uCamZ:{value:420}, uFar:{value:380}, uMouse:{value:new THREE.Vector2(9,9)},
     uAspect:{value:1}, uPR:{value:PR}, uScatter:{value:0}, uPush:{value:reduce?0:1}
   };
   var mat=new THREE.ShaderMaterial({
     uniforms:uniforms, transparent:true, depthWrite:false, depthTest:false, blending:THREE.AdditiveBlending,
     vertexShader:[
-      'attribute vec3 aHome; attribute float aSeed; attribute float aKind; attribute float aFlag; attribute float aVal;',
-      'uniform float uEnd,uPattern,uTime,uCamZ,uFar,uAspect,uPR,uScatter,uPush; uniform vec2 uMouse;',
+      'attribute vec3 aHome; attribute float aSeed; attribute float aKind; attribute float aFlag; attribute float aVal; attribute vec3 aAlt;',
+      'uniform float uEnd,uAna,uSU,uPattern,uTime,uCamZ,uFar,uAspect,uPR,uScatter,uPush; uniform vec2 uMouse;',
       'varying vec3 vCol; varying float vA;',
       'void main(){',
       '  float ahead=uCamZ-aHome.z;',
@@ -569,7 +557,17 @@ dialog .pill[disabled]{opacity:.6}
       '  float m=(1.0-smoothstep(far*0.35,far,ahead))*(1.0-uScatter);',
       '  m=m*m*(3.0-2.0*m);',
       '  vec3 drift=vec3(sin(uTime*0.25+aSeed*40.0),cos(uTime*0.2+aSeed*23.0),sin(uTime*0.15+aSeed*61.0))*14.0;',
-      '  vec3 p=mix(position+drift,aHome,m);',
+      '  vec3 hm=mix(aAlt,aHome,smoothstep(0.62,0.86,uAna));',
+      '  float cu=hm.x*0.9131+hm.y*0.4078;',
+      '  float a1=row*smoothstep(0.03,0.13,uAna)*(1.0-smoothstep(0.24,0.33,uAna));',
+      '  float seg=floor(clamp((cu/uSU+1.6)/3.2*3.0,0.0,2.99));',
+      '  hm.xy+=(seg-1.0)*vec2(0.9131,0.4078)*uSU*0.32*a1;',
+      '  float sw=mix(-2.8,0.9,smoothstep(0.34,0.5,uAna))*uSU;',
+      '  float a2=row*smoothstep(0.33,0.37,uAna)*(1.0-smoothstep(0.56,0.62,uAna));',
+      '  float scan=a2*exp(-pow((cu-sw)/(uSU*0.06),2.0));',
+      '  float aft=a2*smoothstep(0.48,0.53,uAna)*step(0.9*uSU,cu);',
+      '  hm.xy+=vec2(-0.4078,0.9131)*14.0*aft;',
+      '  vec3 p=mix(position+drift,hm,m);',
       '  vec4 mv=modelViewMatrix*vec4(p,1.0);',
       '  vec4 clip=projectionMatrix*mv;',
       '  vec2 d=clip.xy/clip.w-uMouse; d.x*=uAspect;',
@@ -590,6 +588,9 @@ dialog .pill[disabled]{opacity:.6}
       '  vec3 rowc=mix(vec3(0.62,0.72,1.0),vec3(0.95,0.97,1.0),aVal);',
       '  vec3 c=mix(cell,key,step(0.5,aKind)*(1.0-row));',
       '  c=mix(c,rowc,row);',
+      '  vec3 sc=mix(vec3(0.45,0.66,1.0),mix(vec3(0.96,0.97,1.0),vec3(0.50,0.93,0.76),step(1.5,seg)),step(0.5,seg));',
+      '  c=mix(c,sc,a1*0.85);',
+      '  c=mix(c,vec3(1.0,0.78,0.5),aft*0.7)+vec3(1.0)*scan*0.9;',
       '  c=mix(mix(vec3(0.52,0.58,0.74),c,m),vec3(1.0,0.71,0.42),pat);',
       '  vCol=c+vec3(0.9,0.95,1.0)*f*0.8;',
       '}'].join('\n'),
@@ -624,7 +625,6 @@ dialog .pill[disabled]{opacity:.6}
   var dlg=document.getElementById('demoDlg');
   function goTo(v){ pinned=false; want=v; lastInput=performance.now(); }
   [].forEach.call(document.querySelectorAll('[data-go]'),function(bt){ bt.addEventListener('click',function(){ goTo(+bt.getAttribute('data-go')); }); });
-  document.getElementById('skip').addEventListener('click',function(){ goTo(1); });
   var DEMO_INBOX='query@mahalanobis.si';
   var dForm=document.getElementById('demoForm'), dMsg=document.getElementById('demoMsg'), dSend=document.getElementById('demoSend');
   function dSay(t,cls){ dMsg.textContent=t; dMsg.className='dmsg'+(cls?' '+cls:''); }
@@ -667,7 +667,7 @@ dialog .pill[disabled]{opacity:.6}
     ['Sources','Data sits in\nseparate sources.','',['Separate keys per source','No documented joins','No shared definitions']],
     ['Connect','Sources are joined and\nevery join is counted.','',['Keys matched across sources','Each join counted on every row','Failed joins dropped']],
     ['Semantic layer','The semantic layer is\nbuilt from the data.','',['Keys reconciled into entities','Metrics defined with formulas','Approved by your team']],
-    ['Root cause','When a metric moves,\nits cause is tested.','',['Change point, segmentation, drivers','Causes confirmed or ruled out','False alarms dropped','Next step, replayable']]
+    ['Root cause','When a metric moves,\nits cause is tested.','',['Analyses run on every row','Causes confirmed or ruled out','False alarms dropped','Next step, replayable']]
   ];
 
   var el={open:document.getElementById('open'),close:document.getElementById('close'),say:document.getElementById('say'),
@@ -691,7 +691,7 @@ dialog .pill[disabled]{opacity:.6}
 
 
   /* ---------- glass notes: what the engine is doing, pinned to the thing it is doing it to ---------- */
-  var SAMPLE='<span class="tag">sample data</span>';
+  var SAMPLE='';
   var notesDef=[
     {from:0.275,to:0.335,anchor:joinTags[1].s.position,place:'below',html:
       '<div class="h">Join found'+SAMPLE+'</div><div class="k">orders_db.cust_ref &rarr; crm.customer_id</div>'+
@@ -702,17 +702,13 @@ dialog .pill[disabled]{opacity:.6}
     {from:0.52,to:0.64,anchor:null,ent:2,dir:'in',html:
       '<div class="h">Entity'+SAMPLE+'</div><div class="t">Customer</div><div class="k">crm.customer_id = events.user_id = orders.cust_ref</div>'+
       '<div class="r"><span>Keys reconciled</span><b>3 of 3</b></div><div class="r"><span>Status</span><b class="st" data-acc="0.565">Proposed</b></div>'},
-    {from:0.83,to:0.905,anchor:analysisAnchor,place:'above',html:
-      '<div class="h">Analyses run'+SAMPLE+'</div>'+
-      '<div class="r"><span>Change point detection</span><b class="ok">shift on 3 Nov</b></div><div class="r"><span>Segmentation</span><b class="ok">West region</b></div>'+
-      '<div class="r"><span>Driver analysis</span><b class="ok">courier switch</b></div><div class="r"><span>Seasonality test</span><b>no effect</b></div>'},
-    {from:0.915,to:1.2,anchor:spr.position,cls:'fin',html:
+    {from:0.94,to:1.2,anchor:spr.position,cls:'fin',html:
       '<div class="h warn">Root cause found'+SAMPLE+'</div><div class="t">Refund rate up 2.1 pts in the West region since 3 Nov.</div>'+
-      '<svg class="chart" viewBox="0 0 288 70" role="img" aria-label="Sample chart: refund rate stays inside its expected band, then rises above it from 3 Nov"><rect class="band" x="8" y="35" width="272" height="14" rx="2"/><path class="pre" pathLength="1" d="M8.0,40.9 L17.4,39.8 L26.8,43.0 L36.1,39.3 L45.5,42.2 L54.9,41.1 L64.3,39.2 L73.7,42.0 L83.0,39.0 L92.4,41.6 L101.8,39.2 L111.2,39.4 L120.6,41.5 L129.9,44.1 L139.3,39.6 L148.7,40.2 L158.1,42.8 L167.4,44.9 L176.8,42.5"/><path class="post" pathLength="1" d="M176.8,42.5 L186.2,35.1 L195.6,32.4 L205.0,20.5 L214.3,19.2 L223.7,15.7 L233.1,14.9 L242.5,14.7 L251.9,15.9 L261.2,18.9 L270.6,15.1 L280.0,17.5"/><g class="cp"><line x1="176.8" y1="6" x2="176.8" y2="58"/><text x="176.8" y="68" text-anchor="middle">3 Nov</text></g><text class="lb" x="8" y="68">expected range</text><g class="endp"><circle class="halo" cx="280.0" cy="17.5" r="7"/><circle cx="280.0" cy="17.5" r="3"/><text x="270.0" y="12.5" text-anchor="end">+2.1 pts</text></g></svg>'+
+      '<svg class="chart" viewBox="0 0 288 70" role="img" aria-label="Chart: refund rate stays inside its expected band, then rises above it from 3 Nov"><rect class="band" x="8" y="35" width="272" height="14" rx="2"/><path class="pre" pathLength="1" d="M8.0,40.9 L17.4,39.8 L26.8,43.0 L36.1,39.3 L45.5,42.2 L54.9,41.1 L64.3,39.2 L73.7,42.0 L83.0,39.0 L92.4,41.6 L101.8,39.2 L111.2,39.4 L120.6,41.5 L129.9,44.1 L139.3,39.6 L148.7,40.2 L158.1,42.8 L167.4,44.9 L176.8,42.5"/><path class="post" pathLength="1" d="M176.8,42.5 L186.2,35.1 L195.6,32.4 L205.0,20.5 L214.3,19.2 L223.7,15.7 L233.1,14.9 L242.5,14.7 L251.9,15.9 L261.2,18.9 L270.6,15.1 L280.0,17.5"/><g class="cp"><line x1="176.8" y1="6" x2="176.8" y2="58"/><text x="176.8" y="68" text-anchor="middle">3 Nov</text></g><text class="lb" x="8" y="68">expected range</text><g class="endp"><circle class="halo" cx="280.0" cy="17.5" r="7"/><circle cx="280.0" cy="17.5" r="3"/><text x="270.0" y="12.5" text-anchor="end">+2.1 pts</text></g></svg>'+
       '<div class="r"><span>Root cause</span><b class="ok">courier switch, 78%</b></div>'+
       '<div class="r opt"><span>False alarms suppressed</span><b>11 of 12</b></div>'+
       '<div class="r opt"><span>Replay</span><b class="ok">identical, 4,812 rows</b></div>'+
-      '<div class="act"><span>Next step</span>Move West region orders back to the previous courier.</div>'}
+      '<div class="act"><span>Suggested next step</span>Evaluate the new courier&#39;s SLA and performance in the West.</div>'}
   ];
   var notesHost=document.getElementById('notes'), svgNS='http://www.w3.org/2000/svg', leadersSvg=document.getElementById('leaders');
   notesDef.forEach(function(n){
@@ -761,6 +757,17 @@ dialog .pill[disabled]{opacity:.6}
     }
   }
 
+  var anaEl=document.getElementById('ana'), anaLines=[].slice.call(anaEl.querySelectorAll('.al'));
+  var ANA_DONE=['3 segments, West flagged','shift on 3 Nov','courier switch leads','1 confirmed, 3 ruled out'];
+  function updateTicker(ana){
+    anaEl.style.opacity=ss(0.8,0.82,p)*(1-ss(0.93,0.95,p))*(1-scatter);
+    for(var j=0;j<anaLines.length;j++){
+      var L=anaLines[j], a0=+L.getAttribute('data-a'), b0=+L.getAttribute('data-b'), st=L.lastElementChild;
+      if(ana<=a0){ L.className='al'; st.textContent='queued'; }
+      else if(ana<b0){ L.className='al run'; st.textContent='running '+Math.round((ana-a0)/(b0-a0)*100)+'%'; }
+      else { L.className='al done'; st.textContent=ANA_DONE[j]; }
+    }
+  }
   var clock=new THREE.Clock(), v3=new THREE.Vector3(), look=new THREE.Vector3(), mx=0, my=0;
   function frame(){
     var dt=Math.min(clock.getDelta(),0.05), now=performance.now();
@@ -805,6 +812,11 @@ dialog .pill[disabled]{opacity:.6}
     uniforms.uCamZ.value=camZ;
     uniforms.uFar.value=far;
     uniforms.uEnd.value=ss(0.74,0.95,p);
+    var ana=Math.max(0,Math.min(1,(p-0.8)/0.13))*(1-scatter); uniforms.uAna.value=ana;
+    var swu=(-2.8+3.7*ss(0.34,0.5,ana))*SU;
+    sweep.position.set(swu*ca,swu*sa,CZ);
+    sweep.material.opacity=ss(0.33,0.37,ana)*(1-ss(0.56,0.62,ana))*0.8;
+    updateTicker(ana);
     var patt=ss(0.4,0.6,p)*(1-scatter); uniforms.uPattern.value=patt;
     for(q=0;q<threads.length;q++){
       var th=threads[q]; e=ss(0.75,1,mOf(th.z));
@@ -825,7 +837,6 @@ dialog .pill[disabled]{opacity:.6}
 
     el.open.style.opacity=1-ss(0.05,0.16,p);
     go.style.pointerEvents=p<0.12?'auto':'none';
-    document.getElementById('skip').style.pointerEvents=p<0.12?'auto':'none';
     var end=ss(0.955,1,p);
     el.close.style.opacity=end;
     el.demo.style.pointerEvents=end>0.5?'auto':'none';
