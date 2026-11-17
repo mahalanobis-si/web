@@ -115,7 +115,6 @@ dialog .pill[disabled]{opacity:.6}
 .note .act{margin-top:9px;padding:8px 10px;border-radius:8px;background:rgba(255,180,107,.16);font-size:13px;line-height:1.4}
 .note .act span{display:block;font-family:var(--data);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ember);margin-bottom:2px}
 .note.fin{width:324px}
-@media (min-width:761px) and (max-height:790px){.note.fin .opt{display:none}}
 .note.fin .t{font-size:18px}
 .note.fin .r{font-size:11px;padding-top:5px;margin-top:5px}
 .chart{display:block;width:100%;height:auto;margin-top:8px;overflow:visible}
@@ -190,7 +189,7 @@ dialog .pill[disabled]{opacity:.6}
   </section>
 
   <section class="say" id="say" aria-live="polite">
-    <div class="in"><div class="k" id="sayK"></div><h2 id="sayT"></h2><p id="sayD"></p><ul id="sayL"></ul></div>
+    <div class="in"><div class="k" id="sayK"></div><h2 id="sayT"></h2><p id="sayD"></p></div>
   </section>
 
   <footer class="bottom">
@@ -427,7 +426,7 @@ dialog .pill[disabled]{opacity:.6}
     var J=joins[i], ja=colTop(J[0],J[1]), jb=colTop(J[2],J[3]);
     var jt=addTube(ja,jb,0x8fb0ff,0.45);
     var jm=new THREE.Vector3().lerpVectors(ja,jb,J[5]);
-    var jtag=addTag(joinTex(J[4]),46,8.6,jm.x,jm.y+7,jm.z); jtag.tube=jt; joinTags.push(jtag);
+    joinTags.push({s:{position:new THREE.Vector3(jm.x,jm.y+7,jm.z)}});
     /* row to row: matched rows joined dot to dot; the pattern rows in amber */
     var fa=srcFlags[J[0]], fb=srcFlags[J[2]];
     for(var q2=0;q2<3;q2++) addThread(cell(J[0],J[1],fa[q2]),cell(J[2],J[3],fb[q2]),0xffb46b,true);
@@ -469,7 +468,6 @@ dialog .pill[disabled]{opacity:.6}
     var A=ents[rels[i][0]], B=ents[rels[i][1]];
     var ia=at(A,A.home.x<0?25:-25,7.4), ib=at(B,B.home.x<0?25:-25,7.4);
     var rt=addTube(ia,ib,0xeef1f7,0.38);
-    addTag(relTex(rels[i][2]),26,4.9,(ia.x+ib.x)/2,(ia.y+ib.y)/2+4.5,(ia.z+ib.z)/2).tube=rt;
   }
   /* metrics: each input lands on its own port on the metric */
   var metDef=[['Active customers','count(customer_id)',[2,0]],['Net revenue','sum(amount) - refunds',[3,1]],['Refund rate','refunds / payments',[1,5]]];
@@ -693,14 +691,13 @@ dialog .pill[disabled]{opacity:.6}
   ];
 
   var el={open:document.getElementById('open'),close:document.getElementById('close'),say:document.getElementById('say'),
-    sayK:document.getElementById('sayK'),sayT:document.getElementById('sayT'),sayD:document.getElementById('sayD'),sayL:document.getElementById('sayL'),
+    sayK:document.getElementById('sayK'),sayT:document.getElementById('sayT'),sayD:document.getElementById('sayD'),
     bar:document.getElementById('bar'),hint:document.getElementById('hint'),demo:document.getElementById('demo')};
   var beatNow=-1, beatWant=-1, swapping=false, scrim2=document.getElementById('scrim2');
   function fillSay(b){
     var d=SAY[b]; beatNow=b;
     el.sayK.innerHTML='<b>0'+(b+1)+'</b> / 04 &nbsp; '+d[0];
     el.sayT.textContent=d[1]; el.sayD.textContent=d[2]; el.sayD.hidden=!d[2];
-    el.sayL.innerHTML=d[3].map(function(x){ return '<li>'+x+'</li>'; }).join('');
   }
   function setBeat(b){
     beatWant=b;
@@ -725,8 +722,6 @@ dialog .pill[disabled]{opacity:.6}
       '<div class="h warn">Root cause found'+SAMPLE+'</div><div class="t">Refund rate up 2.1 pts in the West region since 3 Nov.</div>'+
       '<svg class="chart" viewBox="0 0 288 70" role="img" aria-label="Chart: refund rate stays inside its expected band, then rises above it from 3 Nov"><rect class="band" x="8" y="35" width="272" height="14" rx="2"/><path class="pre" pathLength="1" d="M8.0,40.9 L17.4,39.8 L26.8,43.0 L36.1,39.3 L45.5,42.2 L54.9,41.1 L64.3,39.2 L73.7,42.0 L83.0,39.0 L92.4,41.6 L101.8,39.2 L111.2,39.4 L120.6,41.5 L129.9,44.1 L139.3,39.6 L148.7,40.2 L158.1,42.8 L167.4,44.9 L176.8,42.5"/><path class="post" pathLength="1" d="M176.8,42.5 L186.2,35.1 L195.6,32.4 L205.0,20.5 L214.3,19.2 L223.7,15.7 L233.1,14.9 L242.5,14.7 L251.9,15.9 L261.2,18.9 L270.6,15.1 L280.0,17.5"/><g class="cp"><line x1="176.8" y1="6" x2="176.8" y2="58"/><text x="176.8" y="68" text-anchor="middle">3 Nov</text></g><text class="lb" x="8" y="68">expected range</text><g class="endp"><circle class="halo" cx="280.0" cy="17.5" r="7"/><circle cx="280.0" cy="17.5" r="3"/><text x="270.0" y="12.5" text-anchor="end">+2.1 pts</text></g></svg>'+
       '<div class="r"><span>Root cause</span><b class="ok">courier switch, 78%</b></div>'+
-      '<div class="r opt"><span>False alarms suppressed</span><b>11 of 12</b></div>'+
-      '<div class="r opt"><span>Replay</span><b class="ok">identical, 4,812 rows</b></div>'+
       '<div class="act"><span>Suggested next step</span>Evaluate the new courier&#39;s SLA and performance in the West.</div>'}
   ];
   var notesHost=document.getElementById('notes'), svgNS='http://www.w3.org/2000/svg', leadersSvg=document.getElementById('leaders');
