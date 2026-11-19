@@ -94,7 +94,7 @@ dialog .pill[disabled]{opacity:.6}
 .say.swap .in{opacity:0;transform:translateY(10px)}
 .say .k{font-family:var(--data);font-size:15px;letter-spacing:.02em;text-transform:uppercase;color:var(--mist)}
 .say .k b{font-weight:400;color:var(--ink)}
-.say h2{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(36px,4.4vw,64px);line-height:1;letter-spacing:-.03em;white-space:pre-line}
+.say h2{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(32px,3.6vw,54px);line-height:1.02;letter-spacing:-.03em;white-space:pre-line}
 .say p{margin:0;max-width:46em;font-family:var(--data);font-size:12px;line-height:1.25;text-transform:uppercase}
 .say ul{position:relative;list-style:none;margin:4px 0 0 0;padding:0 0 0 26px;display:flex;flex-direction:column;gap:2px;font-family:var(--data);font-size:12px;line-height:1.25;text-transform:uppercase}
 .say ul::before{content:"";position:absolute;left:0;top:-2px;bottom:-2px;width:5px;border:1px solid var(--ember);border-right:0}
@@ -171,7 +171,7 @@ dialog .pill[disabled]{opacity:.6}
   .travel{font-size:13px}
   #ana{left:16px;right:16px;bottom:auto;top:calc(84px + env(safe-area-inset-top,0px));transform:none;width:auto;padding:10px 12px;border-radius:10px;background:rgba(4,6,10,.78)}
   .say .in{gap:12px}
-  .say h2{font-size:34px}
+  .say h2{font-size:28px;white-space:normal}
   .nav button:not(.pill){display:none}
   .travel{width:100%;justify-content:center}
 }
@@ -210,7 +210,7 @@ dialog .pill[disabled]{opacity:.6}
   </section>
 
   <footer class="bottom">
-    <div class="travel"><span id="hint">Scroll to travel</span><span class="rail"><b style="left:17%"></b><b style="left:43%"></b><b style="left:80%"></b><i id="bar"></i></span></div>
+    <div class="travel"><span id="hint">Scroll to travel</span><span class="rail"><b style="left:17%"></b><b style="left:80%"></b><b style="left:93%"></b><b style="left:97.5%"></b><i id="bar"></i></span></div>
   </footer>
 </div>
 
@@ -686,10 +686,11 @@ dialog .pill[disabled]{opacity:.6}
 
   var STEP=[0,0.17,0.43,0.8,1.0001];
   var SAY=[
-    ['Sources','Data sits in\nseparate sources.','',['Separate keys per source','No documented joins','No shared definitions']],
-    ['Connect data','Sources are joined and\nevery join is counted.','',['Keys matched across sources','Each join counted on every row','Failed joins dropped']],
-    ['Semantic layer','The semantic layer is\nbuilt from the data.','',['Keys reconciled into entities','Metrics defined with formulas','Approved by your team']],
-    ['Root cause','When a metric moves,\nits cause is tested.','',['Analyses run on every row','Causes confirmed or ruled out','False alarms dropped','Next step, replayable']]
+    ['Heterogeneous sources','Every data store mapped,\nwhatever slice of the\nbusiness it holds.','',[]],
+    ['Semantic graph','One graph of your data,\nwith lineage and provenance\non every field.','',[]],
+    ['Continuous analytics','Finds what changed before\nyour analysts start the day.','',[]],
+    ['Proactive root cause','When a metric goes off,\nthe cause is found and tested.','',[]],
+    ['Deterministic','Every computation reproducible\nand auditable. Trust follows.','',[]]
   ];
 
   var el={open:document.getElementById('open'),close:document.getElementById('close'),say:document.getElementById('say'),
@@ -698,7 +699,7 @@ dialog .pill[disabled]{opacity:.6}
   var beatNow=-1, beatWant=-1, swapping=false, scrim2=document.getElementById('scrim2');
   function fillSay(b){
     var d=SAY[b]; beatNow=b;
-    el.sayK.innerHTML='<b>0'+(b+1)+'</b> / 04 &nbsp; '+d[0];
+    el.sayK.innerHTML='<b>0'+(b+1)+'</b> / 05 &nbsp; '+d[0];
     el.sayT.textContent=d[1]; el.sayD.textContent=d[2]; el.sayD.hidden=!d[2];
   }
   function setBeat(b){
@@ -737,15 +738,16 @@ dialog .pill[disabled]{opacity:.6}
     leadersSvg.appendChild(n.line); leadersSvg.appendChild(n.dot);
   });
   function updateNotes(camZ,now){
-    var w=window.innerWidth, h=window.innerHeight, narrow=w<760, endV=ss(0.955,1,p), cr=null;
+    var w=window.innerWidth, h=window.innerHeight, narrow=w<760, endV=ss(0.97,1,p), cr=null;
     if(endV>0.02){ cr={l:1e9,t:1e9,r:-1e9,b:-1e9}; [].forEach.call(el.close.children,function(ch0){ var b0=ch0.getBoundingClientRect(); cr.l=Math.min(cr.l,b0.left); cr.t=Math.min(cr.t,b0.top); cr.r=Math.max(cr.r,b0.right); cr.b=Math.max(cr.b,b0.bottom); }); }
     for(var j=0;j<notesDef.length;j++){
       var n=notesDef[j], vis=ss(n.from,n.from+0.02,p)*(1-ss(n.to-0.02,n.to,p))*(1-scatter);
+      if(n.cls==='fin' && narrow) vis*=1-ss(0.975,0.99,p);
       if(n.card) n.anchor.copy(n.local).applyQuaternion(n.card.mesh.quaternion).add(n.card.mesh.position);
       v3.copy(n.anchor).project(camera);
       if(v3.z>1||vis<0.01){ n.el.style.opacity=0; n.line.style.opacity=0; n.dot.style.opacity=0; continue; }
       var ax=(v3.x+1)/2*w, ay=(1-v3.y)/2*h, cw=n.el.offsetWidth, ch=n.el.offsetHeight, x, y, lx, ly;
-      if(narrow){ x=(w-cw)/2; if(n.cls==='fin'){ y=h-ch-74; ly=y; } else { y=84; ly=y+ch; } lx=w/2; }
+      if(narrow){ x=(w-cw)/2; y=84; ly=y+ch; lx=w/2; }
       else if(n.place==='below'){ x=Math.max(16,Math.min(w-16-cw,ax-cw*0.35)); y=Math.min(h-ch-150,ay+34); lx=Math.max(x+14,Math.min(x+cw-14,ax)); ly=y; }
       else if(n.place==='above'){ x=Math.max(16,Math.min(w-16-cw,ax+24)); y=Math.max(84,ay-ch-24); lx=x; ly=y+ch-14; }
       else{
@@ -855,14 +857,14 @@ dialog .pill[disabled]{opacity:.6}
 
     el.open.style.opacity=1-ss(0.03,0.1,p);
     go.style.pointerEvents=p<0.06?'auto':'none';
-    var end=ss(0.955,1,p);
+    var end=ss(0.97,1,p);
     el.close.style.opacity=end;
     el.demo.style.pointerEvents=end>0.5?'auto':'none';
     el.demo.tabIndex=end>0.5?0:-1;
     el.bar.style.width=Math.round(p*100)+'%';
     el.hint.textContent=p>0.97?'You have arrived':'Scroll to travel';
-    setBeat(p<STEP[1]?0:p<STEP[2]?1:p<STEP[3]?2:3);
-    el.say.style.opacity=ss(0.07,0.125,p)*(1-ss(0.925,0.945,p));
+    setBeat(p<0.17?0:p<0.8?1:p<0.93?2:p<0.975?3:4);
+    el.say.style.opacity=ss(0.07,0.125,p);
     scrim2.style.opacity=el.say.style.opacity;
 
     renderer.render(scene,camera);
