@@ -231,7 +231,7 @@ dialog .pill[disabled]{opacity:.6}
   </section>
 
   <footer class="bottom">
-    <div class="travel"><span id="hint">Scroll to travel</span><span class="rail"><b style="left:17%"></b><b style="left:80%"></b><b style="left:88%"></b><b style="left:95%"></b><i id="bar"></i></span></div>
+    <div class="travel"><span id="hint">Scroll to travel</span><span class="rail"><b style="left:17%"></b><b style="left:80%"></b><b style="left:87%"></b><b style="left:93%"></b><b style="left:97.8%"></b><i id="bar"></i></span></div>
   </footer>
 </div>
 
@@ -742,12 +742,12 @@ dialog .pill[disabled]{opacity:.6}
     {from:0.53,to:0.64,anchor:null,ent:2,dir:'in',html:
       '<div class="h">Entity'+SAMPLE+'</div><div class="t">Customer</div><div class="k">crm.customer_id = events.user_id = orders.cust_ref</div>'+
       '<div class="r"><span>Keys reconciled</span><b>3 of 3</b></div><div class="r"><span>Status</span><b class="st" data-acc="0.565">Proposed</b></div>'},
-    {from:0.885,to:1.2,anchor:spr.position,cls:'fin',html:
+    {from:0.872,to:1.2,anchor:spr.position,cls:'fin',html:
       '<div class="h warn">Root cause found'+SAMPLE+'</div><div class="t">Refund rate up 2.1 pts in the West region since 3 Nov.</div>'+
       '<svg class="chart" viewBox="0 0 288 70" role="img" aria-label="Chart: refund rate stays inside its expected band, then rises above it from 3 Nov"><rect class="band" x="8" y="35" width="272" height="14" rx="2"/><path class="pre" pathLength="1" d="M8.0,40.9 L17.4,39.8 L26.8,43.0 L36.1,39.3 L45.5,42.2 L54.9,41.1 L64.3,39.2 L73.7,42.0 L83.0,39.0 L92.4,41.6 L101.8,39.2 L111.2,39.4 L120.6,41.5 L129.9,44.1 L139.3,39.6 L148.7,40.2 L158.1,42.8 L167.4,44.9 L176.8,42.5"/><path class="post" pathLength="1" d="M176.8,42.5 L186.2,35.1 L195.6,32.4 L205.0,20.5 L214.3,19.2 L223.7,15.7 L233.1,14.9 L242.5,14.7 L251.9,15.9 L261.2,18.9 L270.6,15.1 L280.0,17.5"/><g class="cp"><line x1="176.8" y1="6" x2="176.8" y2="58"/><text x="176.8" y="68" text-anchor="middle">3 Nov</text></g><text class="lb" x="8" y="68">expected range</text><g class="endp"><circle class="halo" cx="280.0" cy="17.5" r="7"/><circle cx="280.0" cy="17.5" r="3"/><text x="270.0" y="12.5" text-anchor="end">+2.1 pts</text></g></svg>'+
       '<div class="r"><span>Root cause</span><b class="ok">courier switch, 78%</b></div>'+
       '<div class="act"><span>Suggested next step</span>Evaluate the new courier&#39;s SLA and performance in the West.</div>'},
-    {from:0.95,to:1.2,anchor:spr.position,cls:'aud',html:
+    {from:0.935,to:1.2,anchor:spr.position,cls:'aud',html:
       '<div class="h">Audit trail</div><div class="t">Refund rate +2.1 pts, West region, since 3 Nov</div>'+
       '<ol class="trail">'+
       '<li><i></i><span>Result</span><b>+2.1 pts</b></li>'+
@@ -770,15 +770,17 @@ dialog .pill[disabled]{opacity:.6}
     leadersSvg.appendChild(n.line); leadersSvg.appendChild(n.dot);
   });
   function updateNotes(camZ,now){
-    var w=window.innerWidth, h=window.innerHeight, narrow=w<760, endV=ss(0.95,0.99,p), cr=null;
+    var w=window.innerWidth, h=window.innerHeight, narrow=w<760, endV=ss(0.978,0.998,p), cr=null;
     if(endV>0.02){ cr={l:1e9,t:1e9,r:-1e9,b:-1e9}; [].forEach.call(el.close.children,function(ch0){ var b0=ch0.getBoundingClientRect(); cr.l=Math.min(cr.l,b0.left); cr.t=Math.min(cr.t,b0.top); cr.r=Math.max(cr.r,b0.right); cr.b=Math.max(cr.b,b0.bottom); }); }
     for(var j=0;j<notesDef.length;j++){
       var n=notesDef[j], vis=ss(n.from,n.from+0.02,p)*(1-ss(n.to-0.02,n.to,p))*(1-scatter);
-      if(n.cls==='fin') vis*=1-ss(0.95,0.965,p);
+      if(n.cls==='fin') vis*=1-ss(0.928,0.94,p);
+      if(n.cls==='aud') vis*=1-ss(0.972,0.984,p);
       if(n.cls==='aud' && narrow) vis=0;
       if(n.cls==='fin' && n.el.querySelector('.chart')){
         /* stage 4: the chart draws as you scroll through it */
-        var dk=reduce?1:ss(0.885,0.935,p);
+        if(vis>0.5 && !n.t0) n.t0=now; else if(vis<0.05) n.t0=0;
+        var dk=reduce?1:(n.t0?Math.min(1,(now-n.t0)/2800):0);
         if(!n.cp){ n.cpre=n.el.querySelector('.chart .pre'); n.cpost=n.el.querySelector('.chart .post'); n.ccp=n.el.querySelector('.chart .cp'); n.cend=n.el.querySelector('.chart .endp'); n.cp=1; }
         n.cpre.style.strokeDashoffset=(1-Math.min(1,dk/0.55)).toFixed(3);
         n.ccp.style.opacity=ss(0.5,0.6,dk).toFixed(2);
@@ -809,7 +811,7 @@ dialog .pill[disabled]{opacity:.6}
         else vis*=(1-endV);
       }
       if(n.cls){ if(vis>0.5) n.el.classList.add('live'); else if(vis<0.05) n.el.classList.remove('live'); }
-      if(n.cls==='aud') n.el.style.setProperty('--ak',ss(0.955,0.99,p).toFixed(3));
+      
       n.el.style.opacity=vis; n.el.style.transform='translate('+Math.round(x)+'px,'+Math.round(y)+'px)';
       n.line.setAttribute('x1',ax.toFixed(1)); n.line.setAttribute('y1',ay.toFixed(1)); n.line.setAttribute('x2',lx.toFixed(1)); n.line.setAttribute('y2',ly.toFixed(1));
       n.dot.setAttribute('cx',ax.toFixed(1)); n.dot.setAttribute('cy',ay.toFixed(1));
@@ -822,7 +824,7 @@ dialog .pill[disabled]{opacity:.6}
   var anaEl=document.getElementById('ana'), anaLines=[].slice.call(anaEl.querySelectorAll('.al'));
   var ANA_DONE=['3 segments, West flagged','shift on 3 Nov','courier switch leads','1 confirmed, 3 ruled out'];
   function updateTicker(ana){
-    anaEl.style.opacity=ss(0.8,0.815,p)*(1-ss(0.875,0.89,p))*(1-scatter);
+    anaEl.style.opacity=ss(0.8,0.81,p)*(1-ss(0.862,0.872,p))*(1-scatter);
     for(var j=0;j<anaLines.length;j++){
       var L=anaLines[j], a0=+L.getAttribute('data-a'), b0=+L.getAttribute('data-b'), st=L.lastElementChild;
       if(ana<=a0){ L.className='al'; st.textContent='queued'; }
@@ -876,7 +878,7 @@ dialog .pill[disabled]{opacity:.6}
     uniforms.uCamZ.value=camZ;
     uniforms.uFar.value=far;
     uniforms.uEnd.value=ss(0.74,0.95,p);
-    var ana=Math.max(0,Math.min(1,(p-0.8)/0.08))*(1-scatter); uniforms.uAna.value=ana;
+    var ana=Math.max(0,Math.min(1,(p-0.8)/0.066))*(1-scatter); uniforms.uAna.value=ana;
     var swu=(-2.8+3.7*ss(0.34,0.5,ana))*SU;
     sweep.position.set(swu*ca,swu*sa,CZ);
     sweep.material.opacity=ss(0.33,0.37,ana)*(1-ss(0.56,0.62,ana))*0.8;
@@ -887,13 +889,13 @@ dialog .pill[disabled]{opacity:.6}
       fg=(1-ss(380,950,camZ-th.mid.z))*ss(40*NF,140*NF,th.mid.distanceTo(camera.position));
       th.ln.material.opacity=fg*e*(th.pattern?0.25+0.75*patt:0.5);
     }
-    var ringO=ss(0.86,0.93,p)*(1-scatter);
+    var ringO=ss(0.85,0.92,p)*(1-scatter);
     for(q=0;q<rings.length;q++) rings[q].material.opacity=ringO*(0.5-q*0.12);
     for(q=0;q<supp.length;q++) supp[q].material.opacity=ringO*0.9;
     uniforms.uScatter.value=scatter;
     uniforms.uMouse.value.set(mouseOn?mouse.x:9, mouseOn?mouse.y:9);
 
-    var seen=ss(0.86,0.9,p)*(1-scatter);
+    var seen=ss(0.85,0.88,p)*(1-scatter);
     spr.material.opacity=seen;
     var pulse=reduce?1:1+Math.sin(now*0.004)*0.18;
     spr.scale.set(60*W*pulse,60*W*pulse,1);
@@ -901,14 +903,14 @@ dialog .pill[disabled]{opacity:.6}
 
     el.open.style.opacity=1-ss(0.03,0.1,p);
     go.style.pointerEvents=p<0.06?'auto':'none';
-    var end=ss(0.95,0.99,p);
+    var end=ss(0.978,0.998,p);
     el.close.style.opacity=end;
     el.demo.style.pointerEvents=end>0.5?'auto':'none';
     el.demo.tabIndex=end>0.5?0:-1;
     el.bar.style.width=Math.round(p*100)+'%';
     el.hint.textContent=p>0.97?'You have arrived':'Scroll to travel';
-    setBeat(p<0.17?0:p<0.8?1:p<0.88?2:p<0.95?3:4);
-    el.say.style.opacity=ss(0.07,0.125,p);
+    setBeat(p<0.17?0:p<0.8?1:p<0.87?2:p<0.93?3:4);
+    el.say.style.opacity=ss(0.07,0.125,p)*(1-ss(0.972,0.984,p));
     scrim2.style.opacity=el.say.style.opacity;
 
     renderer.render(scene,camera);
