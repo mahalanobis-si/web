@@ -121,7 +121,32 @@ dialog .pill[disabled]{opacity:.6}
 .note .r span{min-width:0}
 .note .act{margin-top:9px;padding:8px 10px;border-radius:8px;background:rgba(255,180,107,.16);font-size:13px;line-height:1.4}
 .note .act span{display:block;font-family:var(--data);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ember);margin-bottom:2px}
-.note.fin{width:324px}
+.note.fin{width:380px}
+.note.fin .chart{margin-top:10px}
+.note.fin .chart path{stroke-width:1.8}
+.note.aud{width:380px}
+.note.aud .t{font-size:17px}
+.trail{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column}
+.trail li{position:relative;display:flex;justify-content:space-between;gap:12px;padding:5px 0 5px 22px;font-family:var(--data);font-size:12px;color:#c3cbd8;opacity:0;transform:translateY(4px);transition:opacity .4s,transform .4s}
+.trail li b{font-weight:500;color:var(--ink);text-align:right}
+.trail li i{position:absolute;left:3px;top:9px;width:8px;height:8px;border-radius:50%;background:var(--signal)}
+.trail li:not(:last-child)::after{content:"";position:absolute;left:6.5px;top:19px;bottom:-9px;width:1px;background:rgba(143,176,255,.55)}
+.trail li:last-child i{background:var(--ember)}
+.note.aud.live .trail li{opacity:1;transform:none}
+.note.aud.live .trail li:nth-child(2){transition-delay:.35s}
+.note.aud.live .trail li:nth-child(3){transition-delay:.7s}
+.note.aud.live .trail li:nth-child(4){transition-delay:1.05s}
+.note .h.runs{margin-top:12px;padding-top:9px;border-top:1px solid rgba(238,241,247,.12)}
+.run{display:grid;grid-template-columns:auto auto 1fr auto;gap:10px;align-items:baseline;margin-top:6px;font-family:var(--data);font-size:12px;color:#c3cbd8;font-variant-numeric:tabular-nums}
+.run code{font-family:var(--data);font-size:11px;color:var(--mist)}
+.run b{font-weight:500;color:var(--ink);text-align:right}
+.run em{font-style:normal;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#86e0b4;border:1px solid rgba(134,224,180,.5);border-radius:99px;padding:1px 7px}
+.run em.ph{visibility:hidden}
+.run.r2{opacity:0;transition:opacity .5s 1.5s}
+.run.r2 em{display:inline-block;transform:scale(.6);opacity:0;transition:transform .35s 2.1s,opacity .35s 2.1s}
+.note.aud.live .run.r2{opacity:1}
+.note.aud.live .run.r2 em{transform:none;opacity:1}
+@media (prefers-reduced-motion:reduce){.trail li,.run.r2,.run.r2 em{transition:none}}
 .note.fin .t{font-size:18px}
 .note.fin .r{font-size:11px;padding-top:5px;margin-top:5px}
 .chart{display:block;width:100%;height:auto;margin-top:8px;overflow:visible}
@@ -136,10 +161,6 @@ dialog .pill[disabled]{opacity:.6}
 .chart .endp .halo{opacity:.3;transform-box:fill-box;transform-origin:center}
 .chart .endp text{fill:var(--ember);font-size:9px}
 .chart .cp,.chart .endp{opacity:0}
-.note.live .chart .pre{animation:chDraw 1.3s ease-out .2s forwards}
-.note.live .chart .cp{animation:chFade .4s ease 1.4s forwards}
-.note.live .chart .post{animation:chDraw 1s ease-out 1.6s forwards}
-.note.live .chart .endp{animation:chFade .4s ease 2.5s forwards}
 .note.live .chart .endp .halo{animation:chPulse 1.6s ease-out 2.6s infinite}
 @keyframes chDraw{to{stroke-dashoffset:0}}
 @keyframes chFade{to{opacity:1}}
@@ -690,7 +711,7 @@ dialog .pill[disabled]{opacity:.6}
     ['Semantic graph','Every field in one graph,\nwith lineage and provenance.','',[]],
     ['Continuous analytics','Continuous analysis catches\nissues before things break.','',[]],
     ['Proactive root cause','When a metric goes off,\nthe cause is found and tested.','',[]],
-    ['Deterministic','Every computation is\nreproducible and auditable.','',[]]
+    ['Deterministic','Every number is exact math,\nreproducible and auditable.','',[]]
   ];
 
   var el={open:document.getElementById('open'),close:document.getElementById('close'),say:document.getElementById('say'),
@@ -725,7 +746,18 @@ dialog .pill[disabled]{opacity:.6}
       '<div class="h warn">Root cause found'+SAMPLE+'</div><div class="t">Refund rate up 2.1 pts in the West region since 3 Nov.</div>'+
       '<svg class="chart" viewBox="0 0 288 70" role="img" aria-label="Chart: refund rate stays inside its expected band, then rises above it from 3 Nov"><rect class="band" x="8" y="35" width="272" height="14" rx="2"/><path class="pre" pathLength="1" d="M8.0,40.9 L17.4,39.8 L26.8,43.0 L36.1,39.3 L45.5,42.2 L54.9,41.1 L64.3,39.2 L73.7,42.0 L83.0,39.0 L92.4,41.6 L101.8,39.2 L111.2,39.4 L120.6,41.5 L129.9,44.1 L139.3,39.6 L148.7,40.2 L158.1,42.8 L167.4,44.9 L176.8,42.5"/><path class="post" pathLength="1" d="M176.8,42.5 L186.2,35.1 L195.6,32.4 L205.0,20.5 L214.3,19.2 L223.7,15.7 L233.1,14.9 L242.5,14.7 L251.9,15.9 L261.2,18.9 L270.6,15.1 L280.0,17.5"/><g class="cp"><line x1="176.8" y1="6" x2="176.8" y2="58"/><text x="176.8" y="68" text-anchor="middle">3 Nov</text></g><text class="lb" x="8" y="68">expected range</text><g class="endp"><circle class="halo" cx="280.0" cy="17.5" r="7"/><circle cx="280.0" cy="17.5" r="3"/><text x="270.0" y="12.5" text-anchor="end">+2.1 pts</text></g></svg>'+
       '<div class="r"><span>Root cause</span><b class="ok">courier switch, 78%</b></div>'+
-      '<div class="act"><span>Suggested next step</span>Evaluate the new courier&#39;s SLA and performance in the West.</div>'}
+      '<div class="act"><span>Suggested next step</span>Evaluate the new courier&#39;s SLA and performance in the West.</div>'},
+    {from:0.95,to:1.2,anchor:spr.position,cls:'aud',html:
+      '<div class="h">Audit trail</div><div class="t">Refund rate +2.1 pts, West region, since 3 Nov</div>'+
+      '<ol class="trail">'+
+      '<li><i></i><span>Result</span><b>+2.1 pts</b></li>'+
+      '<li><i></i><span>Formula</span><b>refunds / payments</b></li>'+
+      '<li><i></i><span>Entities</span><b>Payment, Order</b></li>'+
+      '<li><i></i><span>Source rows</span><b>4,812 rows, 2 tables</b></li>'+
+      '</ol>'+
+      '<div class="h runs">Replay</div>'+
+      '<div class="run"><span>Run 1</span><code>7c1e 04a9</code><b>+2.1 pts</b><em class="ph">identical</em></div>'+
+      '<div class="run r2"><span>Run 2</span><code>7c1e 04a9</code><b>+2.1 pts</b><em>identical</em></div>'}
   ];
   var notesHost=document.getElementById('notes'), svgNS='http://www.w3.org/2000/svg', leadersSvg=document.getElementById('leaders');
   notesDef.forEach(function(n){
@@ -742,7 +774,17 @@ dialog .pill[disabled]{opacity:.6}
     if(endV>0.02){ cr={l:1e9,t:1e9,r:-1e9,b:-1e9}; [].forEach.call(el.close.children,function(ch0){ var b0=ch0.getBoundingClientRect(); cr.l=Math.min(cr.l,b0.left); cr.t=Math.min(cr.t,b0.top); cr.r=Math.max(cr.r,b0.right); cr.b=Math.max(cr.b,b0.bottom); }); }
     for(var j=0;j<notesDef.length;j++){
       var n=notesDef[j], vis=ss(n.from,n.from+0.02,p)*(1-ss(n.to-0.02,n.to,p))*(1-scatter);
-      if(n.cls==='fin' && narrow) vis*=1-ss(0.95,0.97,p);
+      if(n.cls==='fin') vis*=1-ss(0.95,0.965,p);
+      if(n.cls==='aud' && narrow) vis=0;
+      if(n.cls==='fin' && n.el.querySelector('.chart')){
+        /* stage 4: the chart draws as you scroll through it */
+        var dk=reduce?1:ss(0.885,0.935,p);
+        if(!n.cp){ n.cpre=n.el.querySelector('.chart .pre'); n.cpost=n.el.querySelector('.chart .post'); n.ccp=n.el.querySelector('.chart .cp'); n.cend=n.el.querySelector('.chart .endp'); n.cp=1; }
+        n.cpre.style.strokeDashoffset=(1-Math.min(1,dk/0.55)).toFixed(3);
+        n.ccp.style.opacity=ss(0.5,0.6,dk).toFixed(2);
+        n.cpost.style.strokeDashoffset=(1-ss(0.58,1,dk)).toFixed(3);
+        n.cend.style.opacity=ss(0.92,1,dk).toFixed(2);
+      }
       if(n.card) n.anchor.copy(n.local).applyQuaternion(n.card.mesh.quaternion).add(n.card.mesh.position);
       v3.copy(n.anchor).project(camera);
       if(v3.z>1||vis<0.01){ n.el.style.opacity=0; n.line.style.opacity=0; n.dot.style.opacity=0; continue; }
@@ -752,20 +794,22 @@ dialog .pill[disabled]{opacity:.6}
       else if(n.place==='above'){ x=Math.max(16,Math.min(w-16-cw,ax+24)); y=Math.max(84,ay-ch-24); lx=x; ly=y+ch-14; }
       else{
         var out=(ax<w/2)!==(n.dir==='in');
+        if(n.cls==='aud'){ x=w-cw-Math.max(16,w*0.03); y=h-ch-56; lx=x; ly=Math.max(y+14,Math.min(y+ch-14,ay)); } else {
         x=out?ax-48-cw:ax+48;
         if(x<16) x=ax+48; else if(x+cw>w-16) x=ax-48-cw;
         x=Math.max(16,Math.min(w-16-cw,x));
         y=Math.max(84,Math.min(h-ch-70,ay-ch/2));
-        lx=x>ax?x:x+cw; ly=Math.max(y+14,Math.min(y+ch-14,ay));
+        lx=x>ax?x:x+cw; ly=Math.max(y+14,Math.min(y+ch-14,ay)); }
       }
-      if(!narrow){ var sb=el.say.getBoundingClientRect();
+      if(!narrow && n.cls!=='aud'){ var sb=el.say.getBoundingClientRect();
         if(x<sb.right+20 && y+ch>sb.top-16){ if(sb.right+24+cw<=w-16){ x=sb.right+24; lx=x; ly=Math.max(y+14,Math.min(y+ch-14,ay)); } else { y=Math.max(84,sb.top-20-ch); ly=y+ch; lx=Math.max(x+14,Math.min(x+cw-14,ax)); } } }
-      if(cr && x<cr.r+16 && x+cw>cr.l-16 && y<cr.b+16 && y+ch>cr.t-16){
+      if(cr && n.cls!=='aud' && x<cr.r+16 && x+cw>cr.l-16 && y<cr.b+16 && y+ch>cr.t-16){
         var y2=cr.b+14;
         if(!narrow && y2+ch<=h-46){ y=y2; ly=y; lx=Math.max(x+14,Math.min(x+cw-14,ax)); }
         else vis*=(1-endV);
       }
       if(n.cls){ if(vis>0.5) n.el.classList.add('live'); else if(vis<0.05) n.el.classList.remove('live'); }
+      if(n.cls==='aud') n.el.style.setProperty('--ak',ss(0.955,0.99,p).toFixed(3));
       n.el.style.opacity=vis; n.el.style.transform='translate('+Math.round(x)+'px,'+Math.round(y)+'px)';
       n.line.setAttribute('x1',ax.toFixed(1)); n.line.setAttribute('y1',ay.toFixed(1)); n.line.setAttribute('x2',lx.toFixed(1)); n.line.setAttribute('y2',ly.toFixed(1));
       n.dot.setAttribute('cx',ax.toFixed(1)); n.dot.setAttribute('cy',ay.toFixed(1));
